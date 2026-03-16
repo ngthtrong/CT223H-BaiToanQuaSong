@@ -1,0 +1,46 @@
+\babel@toc {vietnamese}{}\relax 
+\contentsline {section}{Phân công công việc}{5}{Doc-Start}%
+\contentsline {section}{\numberline {1}Mô tả bài toán}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Giới thiệu bài toán qua sông}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Phát biểu bài toán}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Các thành phần của bài toán tìm kiếm}{6}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}Không gian trạng thái}{6}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2}Trạng thái đầu và trạng thái đích}{6}{subsubsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1.3.3}Tập hành động}{7}{subsubsection.1.3.3}%
+\contentsline {subsubsection}{\numberline {1.3.4}Điều kiện hợp lệ}{7}{subsubsection.1.3.4}%
+\contentsline {subsubsection}{\numberline {1.3.5}Mục tiêu đồ án}{7}{subsubsection.1.3.5}%
+\contentsline {section}{\numberline {2}Phân tích bài toán}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Đặc trưng của không gian trạng thái}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Biểu diễn trạng thái trong chương trình}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Vai trò của ràng buộc}{9}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Phân tích heuristic được sử dụng}{9}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Heuristic \texttt {remaining-items}}{9}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Heuristic \texttt {remaining-trips}}{10}{subsubsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.5}Lý do chọn bốn thuật toán}{10}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Cơ sở lý thuyết}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}BFS -- Breadth-First Search}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}DFS -- Depth-First Search}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}A* Search}{12}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}IDA* -- Iterative Deepening A*}{13}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}So sánh lý thuyết giữa bốn thuật toán}{13}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Thiết kế và cài đặt}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Công nghệ sử dụng}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Kiến trúc chương trình}{14}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Cấu trúc dữ liệu và cách lưu vết tiến trình}{15}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Kiểm tra ràng buộc trong mã nguồn}{15}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Cài đặt từng nhóm chức năng}{16}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}BFS và DFS}{16}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}A*}{16}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}IDA*}{16}{subsubsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.6}Thiết kế giao diện trực quan}{16}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Kết quả và đánh giá}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Kiểm tra khả năng hoạt động của hệ thống}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Lời giải chuẩn của bài toán}{17}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Đánh giá theo từng thuật toán}{18}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}So sánh tìm kiếm mù và tìm kiếm có thông tin}{19}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Giá trị của giao diện trực quan}{19}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Ưu điểm và hạn chế}{19}{subsection.5.6}%
+\contentsline {section}{Phần kết luận}{20}{figure.6}%
+\contentsline {subsection}{Kết luận}{20}{section*.1}%
+\contentsline {subsection}{Hướng phát triển}{21}{section*.1}%
+\contentsline {section}{Tài liệu tham khảo}{22}{section*.1}%

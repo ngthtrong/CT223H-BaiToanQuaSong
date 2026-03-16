@@ -1,0 +1,825 @@
+% ============================================================================
+% BÁO CÁO ĐỒ ÁN NHẬP MÔN TRÍ TUỆ NHÂN TẠO CT223H
+% Đề tài: Bài toán qua sông - Người nông dân, Sói, Dê và Bắp cải
+% Nhóm 11 - CT223H M01
+% Biên dịch: xelatex report-ct223hm01-nhom11.tex
+% ============================================================================
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+\usepackage[vietnamese]{babel}
+
+\usepackage[top=2.5cm,bottom=2.5cm,left=3cm,right=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\SetKwInput{KwInput}{Đầu vào}
+\SetKwInput{KwOutput}{Đầu ra}
+
+\usepackage{listings}
+\lstdefinelanguage{TypeScript}{
+  morekeywords={export,interface,type,const,let,return,if,else,true,false,null,import,from},
+  sensitive=true,
+  morecomment=[l]{//},
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+  language=TypeScript,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{blue!70!black},
+  commentstyle=\itshape\color{green!40!black},
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  captionpos=b,
+  tabsize=2,
+  showstringspaces=false
+}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{graphicx}
+\graphicspath{{../}}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\usepackage{cleveref}
+\usepackage{titlesec}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\textbf{BỘ GIÁO DỤC VÀ ĐÀO TẠO}\\
+\textbf{TRƯỜNG ĐẠI HỌC CẦN THƠ}\\
+\textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}\\[0.5cm]
+
+\includegraphics[height=3cm]{CTU_logo.png}\\[1cm]
+
+{\LARGE\textbf{ĐỒ ÁN}}\\[0.3cm]
+{\Large\textbf{MÔN HỌC NHẬP MÔN TRÍ TUỆ NHÂN TẠO CT223H}}\\[0.5cm]
+{\large\textbf{Nhóm học phần: M01}}\\[1.2cm]
+
+{\Large\textbf{Đề tài}}\\[0.3cm]
+{\LARGE\textbf{BÀI TOÁN QUA SÔNG}}\\
+{\large\textit{Người nông dân, Sói, Dê và Bắp cải}}\\[2cm]
+
+\textbf{Nhóm sinh viên thực hiện:}\\[0.3cm]
+\begin{tabular}{rl}
+1. & Nguyễn Thanh Trọng -- B2305615 (Trưởng nhóm)\\
+2. & Trần Hải Thiên -- B2203580\\
+3. & Trương Trí Hào -- B2203553\\
+\end{tabular}\\[2cm]
+
+\textbf{Cần Thơ, 03/2026}
+\end{center}
+\end{titlepage}
+
+\newpage
+\begin{center}
+\textbf{BỘ GIÁO DỤC VÀ ĐÀO TẠO}\\
+\textbf{TRƯỜNG ĐẠI HỌC CẦN THƠ}\\
+\textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}\\[0.5cm]
+\includegraphics[height=3cm]{CTU_logo.png}\\[1cm]
+
+{\LARGE\textbf{ĐỒ ÁN}}\\[0.3cm]
+{\Large\textbf{MÔN HỌC NHẬP MÔN TRÍ TUỆ NHÂN TẠO CT223H}}\\[0.5cm]
+{\large\textbf{Nhóm học phần: M01}}\\[1cm]
+{\Large\textbf{Đề tài}}\\[0.3cm]
+{\LARGE\textbf{BÀI TOÁN QUA SÔNG}}\\[0.2cm]
+{\large\textit{Người nông dân, Sói, Dê và Bắp cải}}\\[1.5cm]
+
+\begin{tabular}{ll}
+\textbf{Giảng viên hướng dẫn:} & \hspace{2.5cm} \textbf{Nhóm sinh viên thực hiện:}\\
+TS. Lưu Tiến Đạo & 1. Nguyễn Thanh Trọng -- B2305615\\
+ & 2. Trần Hải Thiên -- B2203580\\
+ & 3. Trương Trí Hào -- B2203553\\
+\end{tabular}\\[2cm]
+
+\textbf{Cần Thơ, 03/2026}
+\end{center}
+
+\newpage
+\section*{NHẬN XÉT CỦA GIẢNG VIÊN}
+\vspace{1cm}
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[2cm]
+
+\hfill\textit{Cần Thơ, ngày \quad tháng \quad năm 2026}\\[0.3cm]
+\hfill\textit{(Ký và ghi rõ họ tên)}\\[3cm]
+
+\newpage
+\tableofcontents
+\newpage
+
+\section*{PHÂN CÔNG CÔNG VIỆC}
+\addcontentsline{toc}{section}{Phân công công việc}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cllp{7.5cm}@{}}
+\toprule
+\textbf{STT} & \textbf{Họ và tên} & \textbf{MSSV} & \textbf{Công việc} \\
+\midrule
+1 & Nguyễn Thanh Trọng & B2305615 & Phân tích đề tài, mô hình hóa không gian trạng thái, cài đặt BFS và DFS, tổng hợp nội dung báo cáo \\
+2 & Trần Hải Thiên & B2203580 & Cài đặt A* và IDA*, xây dựng heuristic, kiểm thử quá trình tìm kiếm và đánh giá kết quả \\
+3 & Trương Trí Hào & B2203553 & Thiết kế giao diện React, trực quan hóa cây trạng thái, chỉnh sửa báo cáo và chuẩn bị phần trình bày \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Mô tả bài toán}
+
+\subsection{Giới thiệu bài toán qua sông}
+
+Bài toán qua sông là một bài toán kinh điển trong lĩnh vực trí tuệ nhân tạo. Mặc dù số lượng đối tượng ít và luật chơi đơn giản, bài toán vẫn phản ánh rất rõ quá trình mô hình hóa một vấn đề thực tế thành bài toán tìm kiếm. Người học có thể nhìn thấy trực tiếp sự khác biệt giữa việc sinh trạng thái, kiểm tra ràng buộc, chọn nút mở rộng và đánh giá chất lượng lời giải.
+
+Trong đề tài này, bốn thực thể tham gia gồm người nông dân, sói, dê và bắp cải. Mục tiêu là đưa toàn bộ từ bờ trái sang bờ phải bằng một chiếc thuyền nhỏ. Thuyền chỉ đủ chỗ cho người nông dân và tối đa một đối tượng khác. Nếu người nông dân vắng mặt thì sói sẽ ăn dê, còn dê sẽ ăn bắp cải. Vì vậy, lời giải không chỉ cần đưa tất cả qua sông mà còn phải bảo đảm mọi trạng thái trung gian đều an toàn.
+
+Đây là một ví dụ rất phù hợp cho học phần CT223H vì:
+\begin{itemize}
+    \item Bài toán có kích thước nhỏ, dễ theo dõi.
+    \item Ràng buộc rõ ràng, thuận tiện cho việc kiểm tra hợp lệ.
+    \item Có thể dùng để so sánh trực tiếp giữa tìm kiếm mù và tìm kiếm có thông tin.
+    \item Phù hợp cho trực quan hóa bằng ứng dụng web.
+\end{itemize}
+
+\subsection{Phát biểu bài toán}
+
+Người nông dân cần đưa sói, dê và bắp cải từ bờ trái sang bờ phải. Mỗi chuyến đi, thuyền phải có người nông dân điều khiển và chỉ chở thêm được tối đa một đối tượng. Bài toán có các ràng buộc:
+\begin{itemize}
+    \item Nếu sói ở cùng bờ với dê mà không có người nông dân, sói sẽ ăn dê.
+    \item Nếu dê ở cùng bờ với bắp cải mà không có người nông dân, dê sẽ ăn bắp cải.
+    \item Chỉ những trạng thái không vi phạm hai điều kiện trên mới được xem là hợp lệ.
+\end{itemize}
+
+Mục tiêu của bài toán là tìm một chuỗi hành động hợp lệ để đưa toàn bộ bốn thực thể từ bờ trái sang bờ phải một cách an toàn.
+
+\subsection{Các thành phần của bài toán tìm kiếm}
+
+\subsubsection{Không gian trạng thái}
+
+Mỗi trạng thái được biểu diễn bởi bộ 4 thành phần:
+\[
+S = (F, W, G, C)
+\]
+
+Trong đó:
+\begin{itemize}
+    \item $F$: vị trí của người nông dân.
+    \item $W$: vị trí của sói.
+    \item $G$: vị trí của dê.
+    \item $C$: vị trí của bắp cải.
+\end{itemize}
+
+Mỗi thành phần nhận một trong hai giá trị \texttt{L} hoặc \texttt{R}, tương ứng với bờ trái và bờ phải. Vì có 4 thực thể nên số trạng thái lý thuyết là:
+\[
+2^4 = 16
+\]
+
+Tuy nhiên nhiều trạng thái trong số này không hợp lệ do vi phạm ràng buộc ăn thịt. Vì vậy bài toán thực tế nhỏ hơn đáng kể so với số trạng thái lý thuyết.
+
+\subsubsection{Trạng thái đầu và trạng thái đích}
+
+Trạng thái đầu:
+\[
+S_0 = (L, L, L, L)
+\]
+
+Trạng thái đích:
+\[
+S_{goal} = (R, R, R, R)
+\]
+
+\subsubsection{Tập hành động}
+
+Từ một trạng thái bất kỳ, người nông dân có thể thực hiện một trong các hành động:
+\begin{enumerate}
+    \item Đi một mình sang bờ đối diện.
+    \item Chở sói sang bờ đối diện nếu sói cùng bờ với người nông dân.
+    \item Chở dê sang bờ đối diện nếu dê cùng bờ với người nông dân.
+    \item Chở bắp cải sang bờ đối diện nếu bắp cải cùng bờ với người nông dân.
+\end{enumerate}
+
+\subsubsection{Điều kiện hợp lệ}
+
+Một trạng thái không hợp lệ nếu xảy ra một trong hai trường hợp:
+\begin{itemize}
+    \item Sói và dê ở cùng bờ, còn người nông dân ở bờ bên kia.
+    \item Dê và bắp cải ở cùng bờ, còn người nông dân ở bờ bên kia.
+\end{itemize}
+
+\subsubsection{Mục tiêu đồ án}
+
+Đồ án hướng đến các mục tiêu chính sau:
+\begin{enumerate}
+    \item Mô hình hóa bài toán qua sông thành bài toán tìm kiếm trong không gian trạng thái.
+    \item Cài đặt và so sánh bốn giải thuật BFS, DFS, A* và IDA*.
+    \item Xây dựng ứng dụng web trực quan phục vụ việc học tập và trình bày.
+    \item Giúp người học quan sát được trạng thái, cây tìm kiếm, lời giải và vai trò của heuristic.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    state/.style={rectangle, draw, rounded corners, minimum width=2.1cm, minimum height=0.65cm, font=\small\ttfamily},
+    valid/.style={state, fill=green!10, draw=green!60!black},
+    goal/.style={state, fill=blue!12, draw=blue!60!black},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[valid] (s0) at (0,0) {LLLL};
+    \node[valid] (s1) at (0,-1.5) {RLRL};
+
+    \node[valid] (s2) at (-3.1,-3.0) {LLRL};
+    \node[valid] (s3) at (3.1,-3.0) {LLLR};
+
+    \node[valid] (s4) at (-3.1,-4.5) {RRRL};
+    \node[valid] (s5) at (3.1,-4.5) {RLRR};
+
+    \node[valid] (s6) at (0,-6.0) {LRLL};
+    \node[valid] (s7) at (-3.1,-7.5) {RRLR};
+    \node[valid] (s8) at (3.1,-7.5) {LRLR};
+
+    \node[goal]  (s9) at (0,-9.0) {RRRR};
+
+    \draw[edge] (s0) -- node[right, font=\scriptsize] {chở dê} (s1);
+    \draw[edge] (s1) -- node[above left, font=\scriptsize] {về một mình} (s2);
+    \draw[edge] (s1) -- node[above right, font=\scriptsize] {về một mình} (s3);
+
+    \draw[edge] (s2) -- node[left, font=\scriptsize] {chở sói} (s4);
+    \draw[edge] (s3) -- node[right, font=\scriptsize] {chở bắp cải} (s5);
+
+    \draw[edge] (s4) -- node[left, font=\scriptsize] {đưa dê về} (s6);
+    \draw[edge] (s5) -- node[right, font=\scriptsize] {đưa dê về} (s6);
+
+    \draw[edge] (s6) -- node[above left, font=\scriptsize] {chở bắp cải} (s7);
+    \draw[edge] (s7) -- node[above, font=\scriptsize] {về một mình} (s8);
+    \draw[edge] (s8) -- node[right, font=\scriptsize] {chở dê} (s9);
+\end{tikzpicture}
+\caption{Sơ đồ 10 trạng thái hợp lệ của bài toán gốc và các chuyển trạng thái tiêu biểu đến đích}
+\label{fig:state-space}
+\end{figure}
+
+\section{Phân tích bài toán}
+
+\subsection{Đặc trưng của không gian trạng thái}
+
+Điểm đáng chú ý của bài toán qua sông là không gian trạng thái nhỏ nhưng bị chi phối mạnh bởi ràng buộc. Điều này có nghĩa là số lượng trạng thái lý thuyết không phản ánh đầy đủ độ khó thật sự của bài toán. Cái khó nằm ở việc nhiều trạng thái sinh ra phải bị loại ngay, và chỉ một số ít nhánh mới có khả năng dẫn đến lời giải hợp lệ.
+
+Ví dụ, từ trạng thái đầu \texttt{LLLL}, nếu người nông dân chở sói đi trước thì dê sẽ ở lại với bắp cải mà không có người giám sát. Nếu người nông dân đi một mình, sói lại ở lại với dê. Cả hai đều không hợp lệ. Trên thực tế, hành động đầu tiên an toàn duy nhất là chở dê sang bờ phải. Đây là đặc trưng rất tốt để minh họa cho việc kiểm tra ràng buộc trong AI.
+
+\subsection{Biểu diễn trạng thái trong chương trình}
+
+Trong dự án, trạng thái được cài đặt bằng kiểu dữ liệu sau:
+
+\begin{lstlisting}[caption={Khai báo trạng thái trong TypeScript}]
+export interface PuzzleState {
+  farmer: 'L' | 'R'
+  wolf: 'L' | 'R'
+  goat: 'L' | 'R'
+  cabbage: 'L' | 'R'
+}
+\end{lstlisting}
+
+Mỗi trạng thái sau đó được chuyển thành một khóa chuỗi như \texttt{LLLL}, \texttt{RLRL}, \texttt{RRRR}. Cách biểu diễn này giúp:
+\begin{itemize}
+    \item So sánh trạng thái nhanh.
+    \item Dễ lưu vết trạng thái đã gặp bằng \texttt{Map}.
+    \item Thuận tiện khi hiển thị trên cây trạng thái của giao diện.
+    \item Dễ giải thích cho người dùng trong quá trình chạy từng bước.
+\end{itemize}
+
+\subsection{Vai trò của ràng buộc}
+
+Trong các bài toán tìm kiếm đơn giản, đôi khi chỉ cần sinh tất cả các trạng thái con rồi tiếp tục duyệt. Tuy nhiên với bài toán qua sông, bước kiểm tra ràng buộc gần như là một phần của định nghĩa bài toán. Nếu bỏ qua bước này, cây tìm kiếm sẽ có nhiều nhánh vô nghĩa và không còn phản ánh hành vi đúng của bài toán thực tế.
+
+Trong mã nguồn hiện tại, hàm \texttt{getInvalidReason} không chỉ trả về việc trạng thái có hợp lệ hay không, mà còn trả về chuỗi mô tả nguyên nhân bị loại. Nhờ đó, giao diện có thể hiển thị trực tiếp cho người dùng biết vì sao một nhánh không được tiếp tục mở rộng. Đây là điểm có giá trị sư phạm rất cao.
+
+\subsection{Phân tích heuristic được sử dụng}
+
+Để phục vụ A* và IDA*, dự án hiện cài đặt hai heuristic:
+
+\subsubsection{Heuristic \texttt{remaining-items}}
+
+Heuristic này đếm số đối tượng trong tập \(\{W, G, C\}\) chưa sang bờ phải:
+\[
+h_1(s) = |\{x \in \{W, G, C\} : x = L\}|
+\]
+
+Heuristic này đơn giản nhưng trực quan. Nó phản ánh rằng mỗi đối tượng còn ở bờ trái ít nhất vẫn cần được đưa sang bờ phải một lần nữa.
+
+\subsubsection{Heuristic \texttt{remaining-trips}}
+
+Heuristic thứ hai xét thêm tình huống người nông dân đang ở bờ phải nhưng vẫn còn đối tượng ở bờ trái. Khi đó cần ít nhất một chuyến quay về mới có thể tiếp tục vận chuyển:
+\[
+h_2(s) = h_1(s) +
+\begin{cases}
+1 & \text{nếu } F = R \text{ và còn đối tượng ở bờ trái} \\
+0 & \text{ngược lại}
+\end{cases}
+\]
+
+Heuristic này gần với chi phí vận chuyển thực tế hơn, vì nó phản ánh đúng tình huống phải quay lại để đón thêm đối tượng.
+
+\subsection{Lý do chọn bốn thuật toán}
+
+Mặc dù sản phẩm hiện hỗ trợ nhiều thuật toán hơn, báo cáo này chỉ tập trung vào BFS, DFS, A* và IDA* để giữ phạm vi vừa đủ cho môn học nhưng vẫn thể hiện được hai hướng tiếp cận lớn:
+\begin{itemize}
+    \item Tìm kiếm mù: BFS, DFS.
+    \item Tìm kiếm có thông tin: A*, IDA*.
+\end{itemize}
+
+Với bốn thuật toán này, người học có thể thấy rõ cách thứ tự duyệt thay đổi khi thuật toán có thêm thông tin từ heuristic.
+
+\begin{table}[H]
+\centering
+\caption{Tóm tắt yêu cầu và đặc điểm của bài toán}
+\begin{tabular}{@{}p{5cm}p{9cm}@{}}
+\toprule
+\textbf{Khía cạnh} & \textbf{Mô tả} \\
+\midrule
+Quy mô bài toán & Nhỏ, thích hợp cho trực quan hóa toàn bộ tiến trình \\
+Mức độ ràng buộc & Cao, nhiều trạng thái phải bị loại ngay sau khi sinh \\
+Yêu cầu giải thuật & Cần cho thấy sự khác nhau giữa tìm kiếm mù và có thông tin \\
+Giá trị sư phạm & Dễ trình bày, dễ kiểm chứng, dễ gắn với giao diện minh họa \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Cơ sở lý thuyết}
+
+\subsection{BFS -- Breadth-First Search}
+
+BFS là giải thuật tìm kiếm theo chiều rộng. Thuật toán luôn mở rộng các nút ở độ sâu nhỏ hơn trước, nhờ đó nếu mọi hành động có cùng chi phí thì BFS bảo đảm tìm được lời giải ngắn nhất theo số bước.
+
+Trong bài toán qua sông, mỗi chuyến đi đều được tính là một đơn vị chi phí, do đó BFS rất phù hợp để tìm lời giải tối ưu về số bước.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Tìm được lời giải tối ưu theo số bước.
+    \item Dễ cài đặt, dễ giải thích và phù hợp cho minh họa trên lớp.
+    \item Là chuẩn so sánh tốt cho các thuật toán khác.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item Tốn bộ nhớ nếu frontier tăng lớn.
+    \item Không tận dụng được tri thức miền bài toán.
+\end{itemize}
+
+\begin{algorithm}[H]
+\caption{BFS}
+\KwInput{Trạng thái khởi đầu $s_0$, hàm kiểm tra đích}
+\KwOutput{Đường đi từ $s_0$ đến đích hoặc thất bại}
+Khởi tạo hàng đợi với $s_0$\;
+\While{hàng đợi không rỗng}{
+  Lấy nút đầu tiên trong hàng đợi\;
+  \If{nút hiện tại là đích}{\Return đường đi}\;
+  Sinh các nút con hợp lệ và thêm vào cuối hàng đợi\;
+}
+\Return thất bại\;
+\end{algorithm}
+
+\subsection{DFS -- Depth-First Search}
+
+DFS mở rộng một nhánh theo chiều sâu trước khi quay lui. Thuật toán sử dụng ngăn xếp nên có khuynh hướng đi nhanh vào một nhánh cụ thể. Trên các bài toán nhỏ, DFS có thể tìm lời giải nhanh, nhưng không bảo đảm lời giải tìm được là ngắn nhất.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Cài đặt đơn giản.
+    \item Thường dùng ít bộ nhớ hơn BFS.
+    \item Thể hiện rõ tư duy thử sâu theo nhánh.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item Không bảo đảm tối ưu.
+    \item Kết quả phụ thuộc mạnh vào thứ tự sinh hành động.
+\end{itemize}
+
+\begin{algorithm}[H]
+\caption{DFS}
+\KwInput{Trạng thái khởi đầu $s_0$, hàm kiểm tra đích}
+\KwOutput{Đường đi hoặc thất bại}
+Khởi tạo ngăn xếp với $s_0$\;
+\While{ngăn xếp không rỗng}{
+  Lấy nút trên cùng của ngăn xếp\;
+  \If{nút hiện tại là đích}{\Return đường đi}\;
+  Sinh các nút con hợp lệ và đẩy vào ngăn xếp\;
+}
+\Return thất bại\;
+\end{algorithm}
+
+\subsection{A* Search}
+
+A* là thuật toán tìm kiếm có thông tin, sử dụng hàm đánh giá:
+\[
+f(n) = g(n) + h(n)
+\]
+
+Trong đó \(g(n)\) là chi phí thực từ trạng thái đầu đến nút hiện tại, còn \(h(n)\) là ước lượng chi phí còn lại đến đích. A* ưu tiên những nút vừa có chi phí đi đến thấp, vừa hứa hẹn ở gần mục tiêu.
+
+Trong đồ án, A* sử dụng frontier sắp theo giá trị \(f\), nếu bằng nhau thì xét thêm \(h\) và \(g\). Điều này đủ để thể hiện cơ chế hoạt động của thuật toán trong phạm vi một bài toán nhỏ.
+
+\begin{algorithm}[H]
+\caption{A* Search}
+\KwInput{Trạng thái khởi đầu $s_0$, hàm kiểm tra đích, heuristic $h$}
+\KwOutput{Đường đi tối ưu hoặc thất bại}
+Khởi tạo biên ưu tiên theo $f(n)=g(n)+h(n)$\;
+\While{biên không rỗng}{
+  Lấy nút có giá trị $f$ nhỏ nhất\;
+  \If{nút hiện tại là đích}{\Return đường đi}\;
+  Sinh các nút con hợp lệ và cập nhật vào biên\;
+}
+\Return thất bại\;
+\end{algorithm}
+
+\subsection{IDA* -- Iterative Deepening A*}
+
+IDA* là biến thể của A* theo hướng tiết kiệm bộ nhớ. Thay vì lưu cả frontier lớn, IDA* duyệt sâu theo ngưỡng của hàm \(f\). Khi gặp nút có giá trị \(f\) lớn hơn ngưỡng hiện tại, thuật toán tạm dừng mở rộng nút đó và ghi nhận giá trị vượt ngưỡng nhỏ nhất cho vòng lặp kế tiếp.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Tận dụng được heuristic như A*.
+    \item Dùng ít bộ nhớ hơn A*.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item Phải lặp nhiều vòng với các ngưỡng tăng dần.
+    \item Có thể tốn thêm thời gian do phải duyệt lại.
+\end{itemize}
+
+\begin{algorithm}[H]
+\caption{IDA*}
+\KwInput{Trạng thái khởi đầu $s_0$, hàm kiểm tra đích, heuristic $h$}
+\KwOutput{Đường đi tối ưu hoặc thất bại}
+$bound \leftarrow h(s_0)$\;
+\While{true}{
+  Chạy DFS với điều kiện $f(n) \leq bound$\;
+  \If{tìm thấy đích}{\Return đường đi}\;
+  $bound \leftarrow$ giá trị $f$ vượt ngưỡng nhỏ nhất tiếp theo\;
+}
+\end{algorithm}
+
+\subsection{So sánh lý thuyết giữa bốn thuật toán}
+
+\begin{table}[H]
+\centering
+\caption{So sánh lý thuyết giữa bốn thuật toán}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Thuật toán} & \textbf{Loại tìm kiếm} & \textbf{Cấu trúc chính} & \textbf{Tối ưu} & \textbf{Bộ nhớ} \\
+\midrule
+BFS & Tìm kiếm mù & Hàng đợi & Có, khi chi phí đều nhau & Cao \\
+DFS & Tìm kiếm mù & Ngăn xếp & Không bảo đảm & Thấp \\
+A* & Tìm kiếm có thông tin & Biên theo $f=g+h$ & Có nếu heuristic phù hợp & Cao \\
+IDA* & Tìm kiếm có thông tin & DFS theo ngưỡng $f$ & Có nếu heuristic phù hợp & Thấp hơn A* \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw, rounded corners, minimum width=3.8cm, minimum height=0.9cm, align=center},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[box, fill=orange!12] (blind) at (-3,0) {Tìm kiếm mù\\BFS, DFS};
+    \node[box, fill=green!12] (info) at (3,0) {Tìm kiếm có thông tin\\A*, IDA*};
+    \node[box, fill=blue!8] (space) at (0,2.0) {Không gian trạng thái\\bài toán qua sông};
+    \node[box, fill=yellow!12] (goal) at (0,-2.1) {Trạng thái đích\\đưa toàn bộ sang bờ phải};
+    \draw[edge] (space) -- (blind);
+    \draw[edge] (space) -- (info);
+    \draw[edge] (blind) -- node[left, font=\scriptsize] {duyệt theo cấu trúc} (goal);
+    \draw[edge] (info) -- node[right, font=\scriptsize] {duyệt theo heuristic} (goal);
+\end{tikzpicture}
+\caption{Hai nhóm thuật toán chính được so sánh trong báo cáo}
+\label{fig:blind-vs-informed}
+\end{figure}
+
+\section{Thiết kế và cài đặt}
+
+\subsection{Công nghệ sử dụng}
+
+Nhóm xây dựng sản phẩm dưới dạng ứng dụng web trực quan. Đây là lựa chọn phù hợp vì giúp việc trình bày đồ án sinh động hơn nhiều so với một chương trình console thuần văn bản. Người dùng có thể thay đổi thuật toán, chọn heuristic, xem trạng thái hiện tại, theo dõi cây tìm kiếm và so sánh kết quả giữa các lần chạy.
+
+Các công nghệ chính gồm:
+\begin{itemize}
+    \item React 19 để xây dựng giao diện theo thành phần.
+    \item TypeScript để đảm bảo chặt chẽ về kiểu dữ liệu.
+    \item Vite cho môi trường phát triển và đóng gói nhanh.
+    \item Ant Design để cung cấp hệ thống thành phần giao diện.
+    \item React Flow để biểu diễn cây trạng thái.
+    \item SVG để minh họa người nông dân, sói, dê, bắp cải và thuyền.
+\end{itemize}
+
+\subsection{Kiến trúc chương trình}
+
+Mã nguồn được chia thành các nhóm chức năng rõ ràng:
+\begin{itemize}
+    \item \texttt{src/algorithms/solver.ts}: cài đặt các giải thuật tìm kiếm, sinh hành động, kiểm tra trạng thái và tính toán chỉ số.
+    \item \texttt{src/algorithms/heuristics.ts}: chứa các heuristic dùng cho A* và IDA*.
+    \item \texttt{src/types/puzzle.ts}: mô tả kiểu dữ liệu cho trạng thái, kết quả, nút tìm kiếm.
+    \item \texttt{src/components/RiverScene.tsx}: hiển thị trực quan trạng thái ở hai bờ sông.
+    \item \texttt{src/components/StateTree.tsx}: dựng cây tìm kiếm bằng React Flow.
+    \item \texttt{src/components/PseudocodePanel.tsx}: hiển thị giả mã của thuật toán đang chọn.
+    \item \texttt{src/App.tsx}: điều phối toàn bộ giao diện và logic tương tác.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, rounded corners, fill=blue!8, minimum width=3.7cm, minimum height=0.9cm, align=center},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[block] (app) at (0,0) {\texttt{App.tsx}\\Điều phối giao diện};
+    \node[block] (solver) at (-4,-2) {\texttt{solver.ts}\\Giải thuật tìm kiếm};
+    \node[block] (heur) at (0,-2) {\texttt{heuristics.ts}\\Heuristic};
+    \node[block] (types) at (4,-2) {\texttt{types/puzzle.ts}\\Kiểu dữ liệu};
+    \node[block] (scene) at (-4,-4) {\texttt{RiverScene.tsx}\\Cảnh hai bờ sông};
+    \node[block] (tree) at (0,-4) {\texttt{StateTree.tsx}\\Cây trạng thái};
+    \node[block] (pseudo) at (4,-4) {\texttt{PseudocodePanel.tsx}\\Giả mã thuật toán};
+    \draw[edge] (app) -- (solver);
+    \draw[edge] (app) -- (heur);
+    \draw[edge] (app) -- (types);
+    \draw[edge] (app) -- (scene);
+    \draw[edge] (app) -- (tree);
+    \draw[edge] (app) -- (pseudo);
+    \draw[edge] (solver) -- (types);
+    \draw[edge] (heur) -- (types);
+\end{tikzpicture}
+\caption{Sơ đồ kiến trúc chính của chương trình}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Cấu trúc dữ liệu và cách lưu vết tiến trình}
+
+Ngoài trạng thái, mỗi nút trong cây tìm kiếm còn lưu thêm các trường \texttt{parentId}, \texttt{depth}, \texttt{g}, \texttt{h}, \texttt{f}, \texttt{valid}, \texttt{prunedReason} và \texttt{expandedOrder}. Điều này cho phép hệ thống vừa thực thi thuật toán vừa ghi lại toàn bộ tiến trình để phục vụ cho giao diện.
+
+Nhờ cách thiết kế này, ứng dụng có thể:
+\begin{itemize}
+    \item Hiển thị cây tìm kiếm đầy đủ.
+    \item Tô sáng đường đi lời giải.
+    \item Chỉ ra các nút bị loại vì vi phạm ràng buộc.
+    \item Phát lại quá trình mở rộng từng bước.
+\end{itemize}
+
+\subsection{Kiểm tra ràng buộc trong mã nguồn}
+
+Phần cốt lõi của bài toán là loại bỏ các trạng thái không an toàn. Điều này được cài đặt trực tiếp trong mã nguồn như sau:
+
+\begin{lstlisting}[caption={Kiểm tra ràng buộc của bài toán}]
+if (state.wolf === state.goat && state.farmer !== state.goat) {
+  return 'Sói sẽ ăn dê khi nông dân vắng mặt.'
+}
+
+if (state.goat === state.cabbage && state.farmer !== state.goat) {
+  return 'Dê sẽ ăn bắp cải khi nông dân vắng mặt.'
+}
+\end{lstlisting}
+
+Điểm hay của cài đặt này là chương trình không chỉ loại bỏ trạng thái sai, mà còn lưu lý do bị loại để hiển thị trực tiếp lên giao diện. Nhờ đó, người học không chỉ biết trạng thái đó sai mà còn hiểu sai ở đâu.
+
+\subsection{Cài đặt từng nhóm chức năng}
+
+\subsubsection{BFS và DFS}
+
+Hai thuật toán này dùng chung phần sinh trạng thái, chỉ khác nhau ở cách lấy phần tử từ frontier. Với BFS, chương trình lấy phần tử đầu danh sách; với DFS, chương trình lấy phần tử cuối danh sách. Cách cài đặt này giúp việc đối chiếu hành vi giữa hai thuật toán trở nên rõ ràng và dễ kiểm soát.
+
+\subsubsection{A*}
+
+A* sử dụng giá trị \(f = g + h\) để sắp xếp frontier. Đây là điểm thể hiện rõ tri thức miền bài toán được đưa vào tiến trình tìm kiếm. Các trạng thái có tiềm năng hơn sẽ được ưu tiên mở rộng trước.
+
+\subsubsection{IDA*}
+
+IDA* được cài đặt qua các vòng lặp tăng ngưỡng. Trong mỗi vòng, chương trình dùng DFS nhưng chỉ xét các nút có giá trị \(f\) không vượt quá \texttt{threshold}. Cách tiếp cận này vừa tiết kiệm bộ nhớ, vừa giữ được định hướng của heuristic.
+
+\subsection{Thiết kế giao diện trực quan}
+
+Giao diện được tổ chức để phục vụ cả mục đích chạy thử lẫn mục đích giảng dạy. Các thành phần chính gồm:
+\begin{itemize}
+    \item Khối chọn thuật toán, heuristic và chế độ chạy.
+    \item Vùng minh họa người nông dân, sói, dê, bắp cải ở hai bờ sông.
+    \item Khung giả mã với dòng được tô sáng theo bước hiện tại.
+    \item Cây trạng thái cho phép chọn từng nút để phân tích.
+    \item Thẻ thống kê hiển thị số nút duyệt, số nút sinh, biên tối đa, độ sâu lời giải, chi phí lời giải và thời gian.
+    \item Bảng lịch sử dùng để so sánh các lần chạy liên tiếp.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={rectangle, draw, rounded corners, minimum width=4cm, minimum height=1cm, align=center},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[box, fill=cyan!10] (control) at (0,0) {Khối điều khiển\\thuật toán, heuristic, chế độ chạy};
+    \node[box, fill=green!10] (scene) at (-4,-2.4) {Minh họa trạng thái\\hai bờ sông và thuyền};
+    \node[box, fill=yellow!12] (pseudo) at (0,-2.4) {Giả mã\\dòng đang thực thi};
+    \node[box, fill=orange!12] (tree) at (4,-2.4) {Cây trạng thái\\tương tác};
+    \node[box, fill=blue!8] (metrics) at (-2,-4.8) {Thống kê\\nút duyệt, độ sâu, chi phí};
+    \node[box, fill=violet!10] (history) at (2,-4.8) {Bảng so sánh\\nhiều lần chạy};
+    \draw[edge] (control) -- (scene);
+    \draw[edge] (control) -- (pseudo);
+    \draw[edge] (control) -- (tree);
+    \draw[edge] (scene) -- (metrics);
+    \draw[edge] (tree) -- (history);
+\end{tikzpicture}
+\caption{Bố cục chức năng chính của giao diện web trực quan}
+\label{fig:ui-layout}
+\end{figure}
+
+\section{Kết quả và đánh giá}
+
+\subsection{Kiểm tra khả năng hoạt động của hệ thống}
+
+Dự án đã được kiểm tra bằng lệnh build:
+
+\begin{lstlisting}[caption={Lệnh build dự án web}]
+npm run build
+\end{lstlisting}
+
+Kết quả build thành công cho thấy mã nguồn của sản phẩm đang ở trạng thái có thể sử dụng. Đây là điều kiện cần để báo cáo có giá trị thực tế, không chỉ dừng ở mức mô tả lý thuyết.
+
+\subsection{Lời giải chuẩn của bài toán}
+
+Một lời giải hợp lệ và tối ưu của bài toán gồm 7 bước:
+\begin{enumerate}
+    \item Nông dân chở dê sang bờ phải.
+    \item Nông dân đi một mình về bờ trái.
+    \item Nông dân chở sói sang bờ phải.
+    \item Nông dân chở dê về bờ trái.
+    \item Nông dân chở bắp cải sang bờ phải.
+    \item Nông dân đi một mình về bờ trái.
+    \item Nông dân chở dê sang bờ phải.
+\end{enumerate}
+
+Lời giải này được dùng làm chuẩn để kiểm tra tính đúng đắn của các thuật toán trong chương trình.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    solutionstep/.style={rectangle, rounded corners, draw=blue!60!black, fill=blue!5, minimum width=9cm, minimum height=0.7cm, font=\small, align=left},
+    edge/.style={->, >=Stealth, thick, blue!60!black}
+]
+    \node[solutionstep] (a) at (0,0) {Bước 1: Chở dê sang bờ phải};
+    \node[solutionstep] (b) at (0,-1.2) {Bước 2: Nông dân quay về một mình};
+    \node[solutionstep] (c) at (0,-2.4) {Bước 3: Chở sói sang bờ phải};
+    \node[solutionstep] (d) at (0,-3.6) {Bước 4: Đưa dê quay lại bờ trái};
+    \node[solutionstep] (e) at (0,-4.8) {Bước 5: Chở bắp cải sang bờ phải};
+    \node[solutionstep] (f) at (0,-6.0) {Bước 6: Nông dân quay về một mình};
+    \node[solutionstep] (g) at (0,-7.2) {Bước 7: Chở dê sang bờ phải và hoàn thành};
+    \draw[edge] (a) -- (b);
+    \draw[edge] (b) -- (c);
+    \draw[edge] (c) -- (d);
+    \draw[edge] (d) -- (e);
+    \draw[edge] (e) -- (f);
+    \draw[edge] (f) -- (g);
+\end{tikzpicture}
+\caption{Minh họa chuỗi hành động của lời giải tối ưu 7 bước}
+\label{fig:solution-steps}
+\end{figure}
+
+\subsection{Đánh giá theo từng thuật toán}
+
+\begin{table}[H]
+\centering
+\caption{Đánh giá tổng quan trên bài toán gốc}
+\begin{tabular}{@{}lp{4cm}p{7cm}@{}}
+\toprule
+\textbf{Thuật toán} & \textbf{Kết quả} & \textbf{Nhận xét} \\
+\midrule
+BFS & Tìm được lời giải 7 bước & Ổn định, dễ giải thích, phù hợp để minh họa tìm kiếm theo tầng và làm chuẩn so sánh \\
+DFS & Tìm được lời giải nhưng không bảo đảm tối ưu tổng quát & Đơn giản, ít tốn bộ nhớ hơn BFS nhưng phụ thuộc vào thứ tự sinh nhánh \\
+A* & Tìm được lời giải với định hướng từ heuristic & Thể hiện rõ tác dụng của heuristic trong việc ưu tiên các trạng thái hứa hẹn \\
+IDA* & Tìm được lời giải với heuristic và cơ chế ngưỡng & Tiết kiệm bộ nhớ hơn A*, nhưng phải lặp nhiều vòng theo các ngưỡng tăng dần \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{So sánh tìm kiếm mù và tìm kiếm có thông tin}
+
+Từ góc độ học thuật, giá trị lớn nhất của đồ án nằm ở chỗ nó cho phép quan sát trực tiếp sự khác nhau giữa hai cách tiếp cận:
+\begin{itemize}
+    \item BFS và DFS là tìm kiếm mù, nghĩa là không biết trạng thái nào gần đích hơn. Chúng chỉ quyết định dựa trên cấu trúc frontier.
+    \item A* và IDA* là tìm kiếm có thông tin, nghĩa là có thêm heuristic để đánh giá mức độ hứa hẹn của từng trạng thái.
+\end{itemize}
+
+Sự khác biệt này không chỉ nằm trên công thức mà còn thể hiện bằng hành vi duyệt cây khác nhau. Khi xem trên giao diện, người dùng có thể nhận ra ngay rằng A* và IDA* thường tập trung sớm hơn vào các trạng thái có lợi cho mục tiêu.
+
+\subsection{Giá trị của giao diện trực quan}
+
+Nếu chỉ cài đặt giải thuật dưới dạng chương trình dòng lệnh, người dùng sẽ khó hình dung tại sao một nhánh bị loại hoặc vì sao một thuật toán mở rộng nút khác với thuật toán còn lại. Với giao diện hiện tại, nhóm đã giải quyết khá tốt vấn đề này:
+\begin{itemize}
+    \item Cảnh hai bờ sông cho phép xem trạng thái ngay lập tức.
+    \item Cây trạng thái cho thấy quan hệ cha con giữa các nút.
+    \item Giả mã giúp liên hệ lý thuyết với hành vi thực thi.
+    \item Bảng thống kê hỗ trợ so sánh nhanh các lần chạy.
+\end{itemize}
+
+Đây là yếu tố làm cho đồ án có chất lượng trình bày tốt hơn đáng kể so với một bản cài đặt thuần túy.
+
+\subsection{Ưu điểm và hạn chế}
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Cài đặt đầy đủ bốn thuật toán tiêu biểu của học phần.
+    \item Tổ chức mã nguồn rõ ràng, tách biệt giữa thuật toán và giao diện.
+    \item Giao diện đẹp, có khả năng minh họa tốt.
+    \item Có thể dùng trực tiếp để báo cáo trên lớp.
+\end{itemize}
+
+\textbf{Hạn chế:}
+\begin{itemize}
+    \item Bài toán còn nhỏ nên chưa thể hiện áp lực hiệu năng lớn.
+    \item Chưa xuất tự động các số liệu thực nghiệm ra báo cáo riêng.
+    \item Chưa có ảnh chụp giao diện thật được nhúng trực tiếp vào báo cáo.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=18pt,
+    width=13cm,
+    height=7cm,
+    ylabel={Mức phù hợp tương đối},
+    symbolic x coords={BFS,DFS,A*,IDA*},
+    xtick=data,
+    ymin=0,
+    ymax=5,
+    nodes near coords,
+    enlarge x limits=0.2,
+    title={So sánh định tính giữa bốn thuật toán trên bài toán qua sông}
+]
+\addplot[fill=blue!45] coordinates {(BFS,5) (DFS,3) (A*,5) (IDA*,4)};
+\end{axis}
+\end{tikzpicture}
+\caption{Biểu đồ định tính về mức phù hợp của các thuật toán cho mục tiêu minh họa bài toán}
+\label{fig:qualitative-compare}
+\end{figure}
+
+\section*{PHẦN KẾT LUẬN}
+\addcontentsline{toc}{section}{Phần kết luận}
+
+\subsection*{1. Kết luận}
+\addcontentsline{toc}{subsection}{Kết luận}
+
+Đồ án đã hoàn thành các mục tiêu trọng tâm của môn học Nhập môn Trí tuệ nhân tạo CT223H. Nhóm đã mô hình hóa bài toán qua sông dưới dạng bài toán tìm kiếm, cài đặt bốn thuật toán BFS, DFS, A* và IDA*, đồng thời xây dựng một ứng dụng web trực quan giúp người học quan sát được trạng thái, cây tìm kiếm, lời giải và vai trò của heuristic.
+
+Qua đồ án có thể rút ra các kết luận chính:
+\begin{itemize}
+    \item BFS là lựa chọn tốt khi cần lời giải tối ưu theo số bước.
+    \item DFS đơn giản nhưng không phải lúc nào cũng là lựa chọn tối ưu.
+    \item A* cho thấy rõ sức mạnh của heuristic trong việc định hướng tìm kiếm.
+    \item IDA* là phương án phù hợp khi muốn giữ lợi ích của heuristic nhưng giảm chi phí bộ nhớ.
+\end{itemize}
+
+Điểm nổi bật của đồ án là đã chuyển phần lý thuyết thành một sản phẩm chạy được, dễ trình bày, dễ quan sát và có giá trị học tập thực tế.
+
+\subsection*{2. Hướng phát triển}
+\addcontentsline{toc}{subsection}{Hướng phát triển}
+
+Trong các phiên bản tiếp theo, nhóm có thể mở rộng theo các hướng sau:
+\begin{itemize}
+    \item Bổ sung ảnh chụp giao diện thật vào báo cáo để tăng tính trực quan.
+    \item Mở rộng bài toán với nhiều đối tượng hơn hoặc thay đổi sức chứa của thuyền.
+    \item Bổ sung chức năng xuất số liệu thực nghiệm tự động ra CSV hoặc PDF.
+    \item Tích hợp giải thích heuristic chi tiết theo từng trạng thái.
+\end{itemize}
+
+\newpage
+\section*{TÀI LIỆU THAM KHẢO}
+\addcontentsline{toc}{section}{Tài liệu tham khảo}
+
+\begin{enumerate}
+    \item Stuart Russell, Peter Norvig. \textit{Artificial Intelligence: A Modern Approach}. Pearson.
+    \item Tài liệu đề tài môn học CT223H: bài toán qua sông người nông dân, sói, dê và bắp cải.
+    \item Mã nguồn đồ án trong thư mục \texttt{src} của dự án ứng dụng web trực quan.
+    \item Tài liệu chính thức của React. \url{https://react.dev}
+    \item Tài liệu chính thức của Ant Design. \url{https://ant.design}
+    \item Tài liệu chính thức của React Flow. \url{https://reactflow.dev}
+\end{enumerate}
+
+\end{document}

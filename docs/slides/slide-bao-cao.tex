@@ -1,0 +1,557 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+% Compile: xelatex slide-bao-cao.tex
+\usepackage[vietnamese]{babel}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+% ---------- Modern palette ----------
+\definecolor{Primary}{HTML}{0C4A6E}
+\definecolor{Secondary}{HTML}{0EA5A4}
+\definecolor{Accent}{HTML}{F59E0B}
+\definecolor{SoftBg}{HTML}{F1F5F9}
+\definecolor{TextDark}{HTML}{0F172A}
+\definecolor{Good}{HTML}{16A34A}
+\definecolor{Warn}{HTML}{D97706}
+\definecolor{Info}{HTML}{0284C7}
+
+\setbeamercolor{normal text}{fg=TextDark,bg=white}
+\setbeamercolor{frametitle}{fg=white,bg=Primary}
+\setbeamercolor{title}{fg=white,bg=Primary}
+\setbeamercolor{block title}{fg=white,bg=Primary}
+\setbeamercolor{block body}{fg=TextDark,bg=SoftBg}
+\setbeamercolor{itemize item}{fg=Secondary}
+\setbeamercolor{itemize subitem}{fg=Secondary}
+\setbeamercolor{structure}{fg=Primary}
+
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont{subtitle}{size=\normalsize}
+
+\setbeamertemplate{navigation symbols}{}
+
+% Footer with slide number
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.82\paperwidth,ht=2.7ex,dp=1.2ex,leftskip=1em]{author in head/foot}%
+      \color{Primary}\small CT223H - Bài toán qua sông
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.18\paperwidth,ht=2.7ex,dp=1.2ex,rightskip=1em plus1fil]{date in head/foot}%
+      \color{Primary}\small \insertframenumber/\inserttotalframenumber
+    \end{beamercolorbox}%
+  }%
+}
+
+\setbeamertemplate{headline}{}
+
+\title{BÀI TOÁN QUA SÔNG}
+\subtitle{Người nông dân -- Sói -- Dê -- Bắp cải}
+\author{Nhóm 11}
+\institute{Trường CNTT\&TT -- Đại học Cần Thơ}
+\date{03/2026}
+
+\newcommand{\teammembers}{%
+Nguyễn Thanh Trọng -- B2305615\\
+Trần Hải Thiên -- B2203580\\
+Trương Trí Hào -- B2203553
+}
+
+\begin{document}
+
+% ---------- Title ----------
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[Primary] (current page.south west) rectangle (current page.north east);
+  \fill[Secondary,opacity=0.15] (current page.south west) -- ++(7,0) -- ++(5,3) -- ++(-7,0) -- cycle;
+  \fill[Accent,opacity=0.18] (current page.north east) -- ++(-8,0) -- ++(-4,-3) -- ++(8,0) -- cycle;
+\end{tikzpicture}
+
+\vspace{0.6cm}
+{\color{white}\usebeamerfont{title}\inserttitle\par}
+\vspace{0.3cm}
+{\color{white!92}\usebeamerfont{subtitle}\insertsubtitle\par}
+\vspace{0.8cm}
+{\color{white!90}\small \insertauthor\par}
+\vspace{0.2cm}
+{\color{white!90}\small \teammembers\par}
+\vspace{0.4cm}
+{\color{white!90}\small \insertinstitute\par}
+\vfill
+{\color{white!85}\small \insertdate\par}
+\end{frame}
+
+% ---------- Agenda ----------
+\begin{frame}{Nội dung báo cáo}
+\begin{columns}[T,onlytextwidth]
+\column{0.52\textwidth}
+\begin{enumerate}
+  \item Giới thiệu vấn đề
+  \item \textbf{Mô hình hóa bài toán}
+  \item \textbf{Hàm heuristic đề xuất}
+  \item Giới thiệu giải thuật sử dụng
+  \item Thiết kế và cài đặt
+  \item Kết quả
+  \item Kết luận và hướng phát triển
+\end{enumerate}
+
+\column{0.48\textwidth}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=8pt,fill=SoftBg,draw=Primary!25] (0,0) rectangle (6.5,5.0);
+  \node[font=\bfseries\small,text=Primary] at (3.25,4.65) {Điểm nhấn báo cáo};
+  \node[draw,rounded corners,fill=Good!15,minimum width=5.5cm,minimum height=0.68cm,font=\scriptsize,text=TextDark] at (3.25,3.9) {State Space: biểu diễn, trạng thái, hành động};
+  \node[draw,rounded corners,fill=Good!15,minimum width=5.5cm,minimum height=0.68cm,font=\scriptsize,text=TextDark] at (3.25,3.1) {Heuristic $h_1$, $h_2$: công thức và so sánh};
+  \node[draw,rounded corners,fill=Info!12,minimum width=5.5cm,minimum height=0.68cm,font=\scriptsize,text=TextDark] at (3.25,2.3) {Kiến trúc React + TypeScript};
+  \node[draw,rounded corners,fill=Info!12,minimum width=5.5cm,minimum height=0.68cm,font=\scriptsize,text=TextDark] at (3.25,1.5) {So sánh 4 thuật toán: DFS, BFS, A*, IDA*};
+  \node[font=\scriptsize\bfseries,text=Good!80!black] at (3.25,0.65) {Tổng: 13 slide -- thời lượng 10 phút};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% ---------- Problem ----------
+\begin{frame}{Giới thiệu vấn đề}
+\begin{columns}[T,onlytextwidth]
+\column{0.52\textwidth}
+\begin{block}{Bài toán}
+\begin{itemize}
+  \item Chuyển 4 đối tượng từ bờ trái sang bờ phải.
+  \item Thuyền chở: nông dân + tối đa 1 đối tượng.
+  \item Ràng buộc an toàn:
+  \begin{itemize}
+    \item Sói + Dê (không có nông dân) $\Rightarrow$ nguy hiểm
+    \item Dê + Bắp cải (không có nông dân) $\Rightarrow$ nguy hiểm
+  \end{itemize}
+\end{itemize}
+\end{block}
+
+\vspace{0.2cm}
+\textbf{Mô hình AI:} State Space Search
+
+\column{0.48\textwidth}
+\begin{tikzpicture}[scale=0.88]
+  \fill[blue!10] (0,0) rectangle (6.2,4.2);
+  \fill[Primary!18] (2.2,0) rectangle (4.0,4.2);
+  \node[font=\scriptsize\bfseries,text=Primary] at (3.1,3.9) {Sông};
+
+  \node[draw,rounded corners,fill=white,font=\scriptsize] (f1) at (1.0,3.2) {Nông dân};
+  \node[draw,rounded corners,fill=white,font=\scriptsize] (w1) at (0.9,2.4) {Sói};
+  \node[draw,rounded corners,fill=white,font=\scriptsize] (g1) at (1.0,1.6) {Dê};
+  \node[draw,rounded corners,fill=white,font=\scriptsize] (c1) at (1.1,0.8) {Bắp cải};
+
+  \draw[->,line width=1.3pt,Secondary] (2.0,2.1) -- (4.25,2.1);
+  \node[font=\scriptsize,text=Secondary!90!black] at (3.1,2.45) {Thuyền qua sông};
+
+  \node[draw,rounded corners,fill=white,font=\scriptsize] at (5.2,2.1) {Mục tiêu: tất cả ở bờ phải};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% ---------- State Space Modeling ----------
+\begin{frame}{Mô hình hóa bài toán -- Không gian trạng thái}
+\begin{columns}[T,onlytextwidth]
+\column{0.50\textwidth}
+\begin{block}{Biểu diễn trạng thái}
+\begin{itemize}
+  \item Tuple $(F,\;W,\;G,\;C)$, mỗi giá trị $\in \{0,\,1\}$
+  \begin{itemize}
+    \item $F$: Nông dân,\quad $W$: Sói
+    \item $G$: Dê,\quad $C$: Bắp cải
+    \item $0 =$ bờ trái,\quad $1 =$ bờ phải
+  \end{itemize}
+  \item Tổng số trạng thái: $2^4 = 16$
+  \item Trạng thái hợp lệ: \textbf{10 / 16}
+\end{itemize}
+\end{block}
+\vspace{0.3cm}
+\begin{tabular}{lcc}
+\hline
+\textbf{Trạng thái} & \textbf{Tuple} & \textbf{Mô tả} \\
+\hline
+Ban đầu & $(0,0,0,0)$ & Tất cả ở bờ trái \\
+Đích & $(1,1,1,1)$ & Tất cả ở bờ phải \\
+\hline
+\end{tabular}
+
+\column{0.50\textwidth}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize]
+  % Initial state
+  \draw[rounded corners=6pt,fill=Info!12,draw=Info!50,line width=0.8pt] (0,3.2) rectangle (3.1,5.8);
+  \node[font=\scriptsize\bfseries,text=Info!80!black] at (1.55,5.5) {Trạng thái ban đầu};
+  \node[font=\small,text=TextDark] at (1.55,5.05) {$(0,\;0,\;0,\;0)$};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (1.55,4.55) {\textbf{F} Nông dân};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (1.55,4.05) {\textbf{W} Sói};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (1.55,3.55) {\textbf{G} Dê + \textbf{C} Bắp cải};
+  % Arrow
+  \node[font=\tiny,text=Accent!80!black] at (3.7,4.5) {Tìm};
+  \node[font=\tiny,text=Accent!80!black] at (3.7,4.15) {kiếm};
+  \draw[-{Latex[length=2.5mm]},thick,Accent] (3.2,4.5) -- (4.2,4.5);
+  % Goal state
+  \draw[rounded corners=6pt,fill=Good!12,draw=Good!50,line width=0.8pt] (4.3,3.2) rectangle (7.4,5.8);
+  \node[font=\scriptsize\bfseries,text=Good!80!black] at (5.85,5.5) {Trạng thái đích};
+  \node[font=\small,text=TextDark] at (5.85,5.05) {$(1,\;1,\;1,\;1)$};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (5.85,4.55) {\textbf{F} Nông dân};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (5.85,4.05) {\textbf{W} Sói};
+  \node[draw,rounded corners=3pt,fill=white,minimum width=1.7cm,font=\tiny] at (5.85,3.55) {\textbf{G} Dê + \textbf{C} Bắp cải};
+  % Sizes note
+  \draw[rounded corners=5pt,fill=SoftBg,draw=Primary!20] (0,0) rectangle (7.4,2.8);
+  \node[font=\scriptsize\bfseries,text=Primary] at (3.7,2.5) {Không gian trạng thái};
+  \draw[fill=gray!20,draw=gray!40,rounded corners=3pt] (0.2,0.25) rectangle (7.2,2.1);
+  \node[font=\tiny,text=gray!60,align=left] at (2.0,1.2) {6 trạng thái\\bị loại};
+  \draw[fill=Good!18,draw=Good!40,rounded corners=3pt] (3.5,0.35) rectangle (7.0,2.0);
+  \node[font=\tiny,text=Good!80!black,align=center] at (5.25,1.2) {10 trạng thái\\hợp lệ};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% ---------- Actions & Constraints ----------
+\begin{frame}{Mô hình hóa bài toán -- Hành động \& Ràng buộc}
+\begin{columns}[T,onlytextwidth]
+\column{0.47\textwidth}
+\begin{block}{Hành động (8 hành động)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Hành động} & \textbf{Điều kiện} & \textbf{Chiều} \\
+\midrule
+F sang phải & $F=0$ & $\rightarrow$ \\
+F + W sang phải & $F=W=0$ & $\rightarrow$ \\
+F + G sang phải & $F=G=0$ & $\rightarrow$ \\
+F + C sang phải & $F=C=0$ & $\rightarrow$ \\
+F quay về & $F=1$ & $\leftarrow$ \\
+F + W quay về & $F=W=1$ & $\leftarrow$ \\
+F + G quay về & $F=G=1$ & $\leftarrow$ \\
+F + C quay về & $F=C=1$ & $\leftarrow$ \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\column{0.53\textwidth}
+\begin{block}{Kiểm tra ràng buộc an toàn}
+Sau mỗi hành động, loại trạng thái nếu:
+\begin{itemize}
+  \item $W = G$ và $F \neq W$\quad $\Rightarrow$ \textcolor{red!70!black}{Sói ăn Dê}
+  \item $G = C$ và $F \neq G$\quad $\Rightarrow$ \textcolor{red!70!black}{Dê ăn Bắp cải}
+\end{itemize}
+\end{block}
+\vspace{0.25cm}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize]
+  \draw[rounded corners=6pt,fill=SoftBg,draw=Primary!20] (0,0) rectangle (7.5,3.2);
+  \node[font=\scriptsize\bfseries,text=Primary] at (3.75,2.9) {Ví dụ trạng thái bị loại};
+  % Invalid state 1
+  \draw[rounded corners=4pt,fill=red!8,draw=red!40] (0.2,1.55) rectangle (3.5,2.65);
+  \node[font=\tiny\bfseries,text=red!70!black] at (1.85,2.4) {Vi phạm: Sói ăn Dê};
+  \node[font=\tiny] at (1.85,2.0) {$(F{=}1,\;W{=}0,\;G{=}0,\;C{=}1)$};
+  \node[font=\tiny,text=gray] at (1.85,1.7) {F ở phải, W+G ở trái};
+  % Invalid state 2
+  \draw[rounded corners=4pt,fill=red!8,draw=red!40] (3.8,1.55) rectangle (7.2,2.65);
+  \node[font=\tiny\bfseries,text=red!70!black] at (5.5,2.4) {Vi phạm: Dê ăn Bắp cải};
+  \node[font=\tiny] at (5.5,2.0) {$(F{=}0,\;W{=}1,\;G{=}1,\;C{=}1)$};
+  \node[font=\tiny,text=gray] at (5.5,1.7) {F ở trái, G+C ở phải};
+  % Note
+  \node[font=\tiny,text=Primary] at (3.75,1.15) {Tổng: 6 trạng thái bị loại trong 16 trạng thái};
+  \node[font=\tiny,text=Good!80!black] at (3.75,0.7) {Chỉ 10 trạng thái hợp lệ được đưa vào không gian tìm kiếm};
+  \node[font=\tiny,text=TextDark] at (3.75,0.3) {Lời giải tối ưu: \textbf{7 bước chuyến}};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% ---------- Heuristics ----------
+\begin{frame}{Hàm heuristic đề xuất}
+\begin{columns}[T,onlytextwidth]
+\column{0.50\textwidth}
+\begin{block}{$h_1(s)$: Số đối tượng chưa đến đích}
+\[
+  h_1(s) = (1{-}W) + (1{-}G) + (1{-}C)
+\]
+\begin{itemize}
+  \item Đếm số đối tượng $\{W,G,C\}$ còn ở bờ trái.
+  \item Phạm vi: $0 \leq h_1 \leq 3$
+  \item \textbf{Admissible}: mỗi đối tượng cần $\geq 1$ chuyến.
+  \item Tính toán $O(1)$, đơn giản.
+\end{itemize}
+\textcolor{Primary}{\textit{Ví dụ:}} $(F{=}0,\,W{=}0,\,G{=}1,\,C{=}0)$\\
+$\Rightarrow h_1 = (1{-}0)+(1{-}1)+(1{-}0) = 2$
+\end{block}
+
+\column{0.50\textwidth}
+\begin{block}{$h_2(s)$: Ước lượng số chuyến tối thiểu}
+\[
+  h_2(s) = \begin{cases}
+    2k - 1 & F=0,\ k > 0 \\
+    1       & F=0,\ k = 0 \\
+    2k + 1  & F=1,\ k > 0 \\
+    0       & F=1,\ k = 0
+  \end{cases}
+\]
+{\scriptsize $k = h_1(s)$ = số đối tượng còn ở bờ trái}
+\begin{itemize}
+  \item Tính đến vị trí thuyền (bờ nào F đang đứng).
+  \item \textbf{Admissible + Consistent}: không bao giờ ước lượng thừa.
+  \item \textbf{Informed hơn} $h_1$: bao giờ cũng $h_2 \geq h_1$.
+\end{itemize}
+\textcolor{Primary}{\textit{Ví dụ:}} $(F{=}1,\,W{=}0,\,G{=}0,\,C{=}0)$\\
+$k=3,\ F=1 \Rightarrow h_2 = 2{\times}3+1 = 7$
+\end{block}
+\end{columns}
+\vspace{0.2cm}
+\centering
+\begin{tikzpicture}[x=1cm,y=0.75cm]
+  \draw[rounded corners=5pt,fill=SoftBg,draw=Primary!20] (0,0) rectangle (14.5,1.4);
+  \node[font=\scriptsize\bfseries,text=Primary] at (1.5,0.7) {Sử dụng trong:};
+  \node[draw,rounded corners,fill=Good!15,minimum width=2.8cm,minimum height=0.7cm,font=\scriptsize] at (4.0,0.7) {A* dùng $h_2(s)$};
+  \node[draw,rounded corners,fill=Accent!15,minimum width=2.8cm,minimum height=0.7cm,font=\scriptsize] at (7.2,0.7) {IDA* dùng $h_2(s)$};
+  \node[draw,rounded corners,fill=Info!12,minimum width=2.8cm,minimum height=0.7cm,font=\scriptsize] at (10.4,0.7) {BFS/DFS: $h(s){=}0$};
+  \node[font=\tiny,text=TextDark] at (13.3,0.7) {UI cho phép chọn $h_1$ hoặc $h_2$};
+\end{tikzpicture}
+\end{frame}
+
+% ---------- Algorithms ----------
+\begin{frame}{Giới thiệu giải thuật sử dụng}
+\begin{columns}[T,onlytextwidth]
+\column{0.52\textwidth}
+\begin{block}{Nhóm giải thuật}
+\begin{itemize}
+  \item \textbf{Uninformed Search:} BFS, DFS -- không dùng heuristic
+  \item \textbf{Informed Search:} A*, IDA* -- dùng $f(s)=g(s)+h(s)$
+\end{itemize}
+\end{block}
+\vspace{0.2cm}
+\begin{block}{So sánh đặc điểm}
+\begin{tabular}{lcccc}
+\toprule
+ & \textbf{BFS} & \textbf{DFS} & \textbf{A*} & \textbf{IDA*} \\
+\midrule
+Tối ưu & \textcolor{Good}{\checkmark} & \textcolor{red!70!black}{$\times$} & \textcolor{Good}{\checkmark} & \textcolor{Good}{\checkmark} \\
+Bộ nhớ & Cao & Thấp & Cao & Thấp \\
+Heuristic & Không & Không & $h_2$ & $h_2$ \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\column{0.48\textwidth}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=8pt,fill=SoftBg,draw=Primary!20] (0,0) rectangle (6.3,5.5);
+  \node[font=\small\bfseries,text=Primary] at (3.15,5.1) {Hàm đánh giá $f(s)$};
+  % BFS
+  \draw[rounded corners=4pt,fill=Info!12,draw=Info!30] (0.3,4.2) rectangle (6.0,4.8);
+  \node[font=\scriptsize] at (3.15,4.5) {\textbf{BFS:} $f(s) = g(s)$ \quad (chi phí đồng đều = 1)};
+  % DFS
+  \draw[rounded corners=4pt,fill=Warn!12,draw=Warn!30] (0.3,3.4) rectangle (6.0,4.0);
+  \node[font=\scriptsize] at (3.15,3.7) {\textbf{DFS:} đi sâu theo stack, không có $f$};
+  % A*
+  \draw[rounded corners=4pt,fill=Good!12,draw=Good!30] (0.3,2.6) rectangle (6.0,3.2);
+  \node[font=\scriptsize] at (3.15,2.9) {\textbf{A*:} $f(s) = g(s) + h_2(s)$, hàng đợi ưu tiên};
+  % IDA*
+  \draw[rounded corners=4pt,fill=Accent!14,draw=Accent!30] (0.3,1.8) rectangle (6.0,2.4);
+  \node[font=\scriptsize] at (3.15,2.1) {\textbf{IDA*:} Lặp DFS với ngưỡng $f \leq$ threshold};
+  % Note
+  \node[font=\tiny,text=TextDark,align=center] at (3.15,1.1)
+  {Với heuristic tốt ($h_2$): A*/IDA* mở rộng};
+  \node[font=\tiny,text=TextDark,align=center] at (3.15,0.65)
+  {ít node hơn BFS/DFS đáng kể};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+% ---------- Design & Implementation ----------
+\begin{frame}{Thiết kế và cài đặt}
+\begin{columns}[T,onlytextwidth]
+\column{0.58\textwidth}
+\begin{block}{Kiến trúc hệ thống (React + TypeScript)}
+\begin{itemize}
+  \item \textbf{Core Solver:} sinh trạng thái, kiểm tra ràng buộc, tìm lời giải
+  \item \textbf{Heuristic Module:} đánh giá $h(s)$ cho A* và IDA*
+  \item \textbf{UI trực quan:}
+  \begin{itemize}
+    \item River Scene (trạng thái hai bờ)
+    \item State Tree (quá trình mở rộng node)
+    \item Pseudocode Panel (bám theo từng bước)
+  \end{itemize}
+\end{itemize}
+\end{block}
+
+\column{0.42\textwidth}
+\begin{tikzpicture}[node distance=0.7cm]
+  \node[draw,rounded corners,fill=Primary!12,minimum width=3.6cm,minimum height=0.9cm,font=\scriptsize\bfseries] (ui) {Giao diện người dùng};
+  \node[draw,rounded corners,fill=Secondary!12,minimum width=3.6cm,minimum height=0.9cm,font=\scriptsize\bfseries,below=of ui] (solver) {Bộ giải thuật tìm kiếm};
+  \node[draw,rounded corners,fill=Accent!14,minimum width=3.6cm,minimum height=0.9cm,font=\scriptsize\bfseries,below=of solver] (heur) {Hàm heuristic};
+  \node[draw,rounded corners,fill=SoftBg,minimum width=3.6cm,minimum height=0.9cm,font=\scriptsize\bfseries,below=of heur] (metric) {Bảng thống kê kết quả};
+
+  \draw[-{Latex[length=2.3mm]},thick,Primary] (ui) -- (solver);
+  \draw[-{Latex[length=2.3mm]},thick,Secondary] (solver) -- (heur);
+  \draw[-{Latex[length=2.3mm]},thick,Accent!90!black] (heur) -- (metric);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Thiết kế và cài đặt (luồng chạy)}
+\centering
+\begin{tikzpicture}[node distance=0.8cm and 0.8cm, every node/.style={font=\scriptsize}]
+  \node[draw,rounded corners,fill=Primary!12,minimum width=2.5cm,minimum height=0.9cm] (a) {Chọn thuật toán};
+  \node[draw,rounded corners,fill=Secondary!12,right=of a,minimum width=2.5cm,minimum height=0.9cm] (b) {Chọn heuristic};
+  \node[draw,rounded corners,fill=Accent!16,right=of b,minimum width=2.5cm,minimum height=0.9cm] (c) {Run / Step};
+  \node[draw,rounded corners,fill=Info!12,below=of b,minimum width=3.2cm,minimum height=0.9cm] (d) {Sinh node + kiểm tra ràng buộc};
+  \node[draw,rounded corners,fill=Good!12,below left=of d,minimum width=3.0cm,minimum height=0.9cm] (e) {Cập nhật cây trạng thái};
+  \node[draw,rounded corners,fill=SoftBg,below right=of d,minimum width=3.0cm,minimum height=0.9cm] (f) {Thống kê kết quả};
+
+  \draw[-{Latex[length=2.2mm]},thick] (a) -- (b);
+  \draw[-{Latex[length=2.2mm]},thick] (b) -- (c);
+  \draw[-{Latex[length=2.2mm]},thick] (c) -- (d);
+  \draw[-{Latex[length=2.2mm]},thick] (d) -- (e);
+  \draw[-{Latex[length=2.2mm]},thick] (d) -- (f);
+\end{tikzpicture}
+
+\vspace{0.35cm}
+\textbf{Điểm nhấn:} hỗ trợ chạy một lượt và chạy từng bước để phục vụ giảng dạy.
+\end{frame}
+
+% ---------- Results ----------
+\begin{frame}{Kết quả}
+\begin{columns}[T,onlytextwidth]
+\column{0.5\textwidth}
+\begin{block}{Kết quả đạt được}
+\begin{itemize}
+  \item Cài đặt 4 thuật toán: DFS, BFS, A*, IDA*
+  \item Tất cả thuật toán đều tìm được lời giải hợp lệ
+  \item Chế độ Step giúp quan sát rõ thứ tự mở rộng node
+  \item Có bảng so sánh: thời gian, số node sinh/mở rộng, độ sâu
+\end{itemize}
+\end{block}
+
+\column{0.5\textwidth}
+\begin{tikzpicture}
+\begin{axis}[
+  width=6.3cm,
+  height=4.7cm,
+  ybar,
+  bar width=7pt,
+  ymin=0,
+  ymax=10,
+  ylabel={Mức tiêu tốn tương đối},
+  symbolic x coords={DFS,BFS,A*,IDA*},
+  xtick=data,
+  xticklabel style={font=\tiny,rotate=35,anchor=east},
+  ytick={0,2,4,6,8,10},
+  yticklabel style={font=\tiny},
+  nodes near coords,
+  nodes near coords style={font=\tiny},
+  grid=major,
+  grid style={dashed,gray!30},
+  axis line style={Primary!70},
+  every axis label/.append style={font=\tiny}
+]
+\addplot[fill=Secondary!65] coordinates {
+  (DFS,9) (BFS,7) (A*,3) (IDA*,4)
+};
+\end{axis}
+\end{tikzpicture}
+\end{columns}
+
+\vspace{0.1cm}
+{\scriptsize Ghi chú: biểu đồ thể hiện xu hướng tương đối để minh hoạ sự khác biệt giữa các nhóm thuật toán.}
+\end{frame}
+
+\begin{frame}{Kết quả (giao diện trực quan)}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=10pt,fill=SoftBg,draw=Primary!30,line width=0.8pt] (0,0) rectangle (12.8,6.4);
+
+  % Header
+  \draw[rounded corners=8pt,fill=Primary!15,draw=Primary!30] (0.4,5.5) rectangle (12.4,6.0);
+  \node[anchor=west,font=\small\bfseries,text=Primary] at (0.7,5.75) {Bài toán Qua Sông - Dashboard};
+
+  % Left control
+  \draw[rounded corners=6pt,fill=white,draw=Primary!20] (0.6,1.0) rectangle (4.1,5.2);
+  \node[anchor=west,font=\scriptsize\bfseries,text=Primary] at (0.8,4.9) {Control Panel};
+  \node[anchor=west,font=\scriptsize] at (0.8,4.45) {- Chọn thuật toán};
+  \node[anchor=west,font=\scriptsize] at (0.8,4.05) {- Chọn heuristic};
+  \node[anchor=west,font=\scriptsize] at (0.8,3.65) {- Chế độ full / step};
+  \node[anchor=west,font=\scriptsize] at (0.8,3.25) {- Nút Run / Play / Pause};
+
+  % River Scene
+  \draw[rounded corners=6pt,fill=white,draw=Secondary!30] (4.4,3.2) rectangle (8.5,5.2);
+  \node[anchor=west,font=\scriptsize\bfseries,text=Secondary!80!black] at (4.6,4.9) {River Scene};
+  \fill[blue!12] (4.6,3.45) rectangle (8.3,4.55);
+  \fill[Secondary!18] (6.2,3.45) rectangle (6.8,4.55);
+
+  % State Tree
+  \draw[rounded corners=6pt,fill=white,draw=Accent!35] (8.8,1.0) rectangle (12.2,5.2);
+  \node[anchor=west,font=\scriptsize\bfseries,text=Accent!90!black] at (9.0,4.9) {State Tree};
+  \draw (9.3,4.2) -- (10.5,3.6);
+  \draw (9.3,4.2) -- (9.8,3.2);
+  \draw (10.5,3.6) -- (11.2,2.9);
+  \fill[Primary] (9.3,4.2) circle (1.3pt);
+  \fill[Secondary] (10.5,3.6) circle (1.3pt);
+  \fill[Secondary] (9.8,3.2) circle (1.3pt);
+  \fill[Good] (11.2,2.9) circle (1.5pt);
+
+  % Metrics
+  \draw[rounded corners=6pt,fill=white,draw=Info!35] (4.4,1.0) rectangle (8.5,3.0);
+  \node[anchor=west,font=\scriptsize\bfseries,text=Info!80!black] at (4.6,2.75) {Metrics};
+  \node[anchor=west,font=\tiny] at (4.7,2.35) {Expanded: 24};
+  \node[anchor=west,font=\tiny] at (4.7,2.0) {Generated: 38};
+  \node[anchor=west,font=\tiny] at (4.7,1.65) {Duration: 0.42 ms};
+\end{tikzpicture}
+\end{frame}
+
+% ---------- Conclusion ----------
+\begin{frame}{Kết luận và hướng phát triển}
+\begin{columns}[T,onlytextwidth]
+\column{0.55\textwidth}
+\small
+\begin{block}{Kết luận}
+\begin{itemize}
+  \item Mô hình hóa bài toán qua sông thành công dưới dạng không gian trạng thái.
+  \item Cài đặt và trực quan hóa đầy đủ các chiến lược tìm kiếm chính.
+  \item Công cụ phù hợp cho học tập, so sánh giải thuật và trình bày trên lớp.
+\end{itemize}
+\end{block}
+
+\begin{block}{Hướng phát triển}
+\begin{itemize}
+  \item Mở rộng bài toán nhiều đối tượng, ràng buộc động.
+  \item So sánh theo batch và xuất báo cáo tự động.
+  \item Nâng cấp animation thuyền và export video demo.
+\end{itemize}
+\end{block}
+
+\column{0.45\textwidth}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[rounded corners=8pt,fill=SoftBg,draw=Primary!25] (0,0) rectangle (6.3,5.5);
+  \node[font=\small\bfseries,text=Primary] at (3.15,5.0) {Thông điệp chính};
+
+  \node[draw,circle,fill=Good!20,minimum size=1.0cm] (n1) at (3.15,3.9) {AI};
+  \node[draw,circle,fill=Info!20,minimum size=1.0cm] (n2) at (1.7,2.5) {UX};
+  \node[draw,circle,fill=Accent!20,minimum size=1.0cm] (n3) at (4.6,2.5) {Edu};
+  \node[draw,circle,fill=Secondary!20,minimum size=1.0cm] (n4) at (3.15,1.2) {Demo};
+
+  \draw[thick,Primary!70] (n1) -- (n2);
+  \draw[thick,Primary!70] (n1) -- (n3);
+  \draw[thick,Primary!70] (n2) -- (n4);
+  \draw[thick,Primary!70] (n3) -- (n4);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[Primary] (current page.south west) rectangle (current page.north east);
+\end{tikzpicture}
+\vfill
+\centering
+{\color{white}\LARGE\bfseries Cảm ơn thầy và các bạn đã lắng nghe!\par}
+\vspace{0.4cm}
+{\color{white!90}\normalsize Hỏi đáp\par}
+\vfill
+\end{frame}
+
+\end{document}

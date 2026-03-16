@@ -1,0 +1,1162 @@
+% ============================================================================
+% BÁO CÁO ĐỒ ÁN NHẬP MÔN TRÍ TUỆ NHÂN TẠO - PHIÊN BẢN 3
+% Đề tài số 9: Bài toán qua sông - Người nông dân, Sói, Dê và Bắp cải
+% Nhóm 2 - CT223H01
+% Biên dịch: xelatex report.tex
+% ============================================================================
+\documentclass[a4paper,12pt]{article}
+
+% === Font & Ngôn ngữ ===
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+\usepackage[vietnamese]{babel}
+
+% === Layout ===
+\usepackage[top=2.5cm,bottom=2.5cm,left=3cm,right=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% === Toán & Ký hiệu ===
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+
+% === Đồ họa ===
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta,calc,shapes.geometric,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% === Giải thuật ===
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\SetKwInput{KwInput}{Đầu vào}
+\SetKwInput{KwOutput}{Đầu ra}
+
+% === Code listing ===
+\usepackage{listings}
+\lstset{
+  language=C++,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bfseries\color{blue!70!black},
+  commentstyle=\itshape\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  captionpos=b,
+  tabsize=4,
+  showstringspaces=false
+}
+
+% === Bảng ===
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+
+% === Hình ảnh ===
+\usepackage{graphicx}
+\usepackage{float}
+
+% === Tham chiếu ===
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\usepackage{cleveref}
+
+% === Tiêu đề section ===
+\usepackage{titlesec}
+
+% ============================================================================
+\begin{document}
+
+% ============================================================================
+%  TRANG BÌA 1
+% ============================================================================
+\begin{titlepage}
+\begin{center}
+\textbf{BỘ GIÁO DỤC VÀ ĐÀO TẠO}\\
+\textbf{TRƯỜNG ĐẠI HỌC CẦN THƠ}\\
+\textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}\\[0.5cm]
+
+\includegraphics[height=3cm]{CTU_logo.png}\\[1cm]
+
+{\LARGE\textbf{ĐỒ ÁN}}\\[0.3cm]
+{\Large\textbf{HỌC PHẦN TRÍ TUỆ NHÂN TẠO}}\\[1.5cm]
+
+{\Large\textbf{Đề tài}}\\[0.3cm]
+{\LARGE\textbf{BÀI TOÁN QUA SÔNG}}\\
+{\large\textit{Người nông dân, Sói, Dê và Bắp cải}}\\[2cm]
+
+\textbf{Nhóm sinh viên thực hiện:}\\[0.3cm]
+\begin{tabular}{rl}
+1. & Nguyễn Thanh Trọng -- B2305615 (Trưởng nhóm)\\
+2. & Trần Hải Thiên -- B2203580\\
+3. & Trương Trí Hào -- B2203553\\
+\end{tabular}\\[2cm]
+
+\textbf{Cần Thơ, 03/2026}
+\end{center}
+\end{titlepage}
+
+% ============================================================================
+%  TRANG BÌA 2
+% ============================================================================
+\newpage
+\begin{center}
+\textbf{BỘ GIÁO DỤC VÀ ĐÀO TẠO}\\
+\textbf{TRƯỜNG ĐẠI HỌC CẦN THƠ}\\
+\textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}\\[0.5cm]
+\includegraphics[height=3cm]{CTU_logo.png}\\[1cm]
+
+{\LARGE\textbf{ĐỒ ÁN}}\\[0.3cm]
+{\Large\textbf{HỌC PHẦN TRÍ TUỆ NHÂN TẠO}}\\[1cm]
+{\Large\textbf{Đề tài}}\\[0.3cm]
+{\LARGE\textbf{BÀI TOÁN QUA SÔNG}}\\[1.5cm]
+
+\begin{tabular}{ll}
+\textbf{Giảng viên hướng dẫn:} & \hspace{3cm} \textbf{Nhóm sinh viên thực hiện:}\\
+TS. Lưu Tiến Đạo & 1. Nguyễn Thanh Trọng -- B2305615\\
+ & 2. Trần Hải Thiên -- B2203580\\
+ & 3. Trương Trí Hào -- B2203553\\
+\end{tabular}\\[2cm]
+
+\textbf{Cần Thơ, 03/2026}
+\end{center}
+
+% ============================================================================
+%  TRANG NHẬN XÉT
+% ============================================================================
+\newpage
+\section*{NHẬN XÉT CỦA GIẢNG VIÊN}
+\vspace{1cm}
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5cm]
+\noindent\rule{\textwidth}{0.5pt}\\[2cm]
+
+\hfill\textit{Cần Thơ, ngày \quad tháng \quad năm 2026}\\[0.3cm]
+\hfill\textit{(Ký và ghi rõ họ tên)}\\[3cm]
+
+% ============================================================================
+%  MỤC LỤC
+% ============================================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================================
+%  PHÂN CÔNG CÔNG VIỆC
+% ============================================================================
+\section*{PHÂN CÔNG CÔNG VIỆC}
+\addcontentsline{toc}{section}{Phân công công việc}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{STT} & \textbf{Họ và tên} & \textbf{MSSV} & \textbf{Công việc} \\
+\midrule
+1 & Nguyễn Thanh Trọng & B2305615 &
+    Trưởng nhóm. Thiết kế mô hình, cài đặt A*, Greedy, IDA* \\
+2 & Trần Hải Thiên & B2203580 &
+    Cài đặt BFS, DFS, UCS, viết báo cáo, soạn slide \\
+3 & Trương Trí Hào & B2203553 &
+    Cài đặt IDS, chạy thử nghiệm, viết kết luận, soạn script \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================================
+%  CHƯƠNG 1: MÔ TẢ BÀI TOÁN
+% ============================================================================
+\section{Mô tả bài toán}
+
+\subsection{Giới thiệu bài toán qua sông}
+
+Bài toán qua sông (River Crossing Problem) là một bài toán kinh điển trong lĩnh vực trí tuệ nhân tạo và lý thuyết đồ thị. Bài toán mô tả tình huống:
+
+\begin{quote}
+\textit{Một người nông dân cần đưa một con sói, một con dê và một cây bắp cải qua sông bằng một chiếc thuyền nhỏ. Thuyền chỉ đủ chỗ cho người nông dân và một đối tượng khác. Nếu để sói ở cùng bờ với dê mà không có người nông dân canh giữ, sói sẽ ăn dê. Tương tự, nếu để dê ở cùng bờ với bắp cải mà không có người nông dân, dê sẽ ăn bắp cải.}
+\end{quote}
+
+\textbf{Mục tiêu}: Tìm cách đưa tất cả (nông dân, sói, dê, bắp cải) từ bờ trái sang bờ phải một cách an toàn.
+
+\subsection{Lịch sử và ý nghĩa}
+
+Bài toán qua sông xuất hiện lần đầu trong tập \textit{Propositiones ad Acuendos Juvenes} (Các bài toán để rèn luyện trí tuệ cho giới trẻ) của Alcuin xứ York vào thế kỷ thứ 8, trở thành một trong những bài toán logic cổ nhất còn được ghi chép.
+
+Trong lĩnh vực trí tuệ nhân tạo, bài toán có ý nghĩa quan trọng:
+\begin{itemize}
+    \item Minh họa rõ ràng khái niệm \textbf{không gian trạng thái} (state space)
+    \item Cho phép so sánh hiệu quả giữa các \textbf{giải thuật tìm kiếm} khác nhau
+    \item Là bài toán có \textbf{ràng buộc} (constraint), đòi hỏi kiểm tra tính hợp lệ
+    \item Không gian trạng thái đủ nhỏ để phân tích thấu đáo, đủ lớn để thấy sự khác biệt
+
+\end{itemize}
+
+\subsection{Các biến thể của bài toán}
+
+\subsubsection{Bài toán gốc (4 đối tượng)}
+
+Bài toán gốc gồm 4 đối tượng: Nông dân (F), Sói (W), Dê (G), Bắp cải (C). Thuyền chở được nông dân và tối đa 1 đối tượng. Không gian trạng thái lý thuyết: $2^4 = 16$ trạng thái, trong đó chỉ 10 trạng thái hợp lệ.
+
+\subsubsection{Bài toán mở rộng (6 đối tượng, thuyền chở 2)}
+
+Để thể hiện sự khác biệt rõ ràng hơn giữa các giải thuật, nhóm đề xuất biến thể mở rộng:
+
+\begin{itemize}
+    \item \textbf{6 đối tượng}: Nông dân (F), Sói (W), Dê (G), Bắp cải (C), Gà (Ch), Hạt ngô (Co)
+    \item \textbf{Thuyền chở 2}: Nông dân có thể chở 1 hoặc 2 đối tượng mỗi chuyến
+    \item \textbf{Ràng buộc}: Sói ăn Dê, Dê ăn Bắp cải, Gà ăn Hạt ngô (khi vắng nông dân)
+    \item \textbf{Không gian trạng thái}: $2^6 = 64$ trạng thái lý thuyết
+\end{itemize}
+
+Biến thể này tạo ra không gian tìm kiếm lớn hơn đáng kể, cho phép thấy rõ ưu thế của tìm kiếm có thông tin so với tìm kiếm mù.
+
+\subsection{Mục tiêu đồ án}
+
+\begin{enumerate}
+    \item Mô hình hóa bài toán qua sông dưới dạng bài toán tìm kiếm trong không gian trạng thái
+    \item Cài đặt và so sánh \textbf{7 giải thuật tìm kiếm}: BFS, DFS, UCS, IDS, A*, Greedy Best-First Search, IDA*
+    \item Thiết kế và đánh giá \textbf{3 hàm heuristic} khác nhau
+    \item Cài đặt \textbf{bài toán mở rộng} để thể hiện sự khác biệt giữa các giải thuật
+    \item Phân tích chi tiết hiệu quả: số node mở rộng, bộ nhớ, thời gian, effective branching factor
+\end{enumerate}
+
+% ============================================================================
+%  CHƯƠNG 2: PHÂN TÍCH BÀI TOÁN
+% ============================================================================
+\section{Phân tích bài toán}
+
+\subsection{Mô hình hóa bài toán}
+
+\subsubsection{Biểu diễn trạng thái}
+
+Mỗi trạng thái được biểu diễn bằng bộ 4 giá trị (bài toán gốc):
+\[
+    S = (\text{Farmer}, \text{Wolf}, \text{Goat}, \text{Cabbage})
+\]
+Mỗi giá trị nhận: \texttt{LEFT} (bờ trái) hoặc \texttt{RIGHT} (bờ phải).
+
+\subsubsection{Trạng thái khởi đầu và đích}
+\[
+    S_0 = (L, L, L, L) \qquad S_{goal} = (R, R, R, R)
+\]
+
+\subsubsection{Hành động (Successor Function)}
+
+Tại mỗi trạng thái, nông dân có thể thực hiện tối đa 4 hành động:
+\begin{enumerate}
+    \item Đi một mình qua sông
+    \item Dẫn Sói qua sông (nếu cùng bờ)
+    \item Dẫn Dê qua sông (nếu cùng bờ)
+    \item Dẫn Bắp cải qua sông (nếu cùng bờ)
+\end{enumerate}
+
+\subsubsection{Ràng buộc (Constraints)}
+
+Trạng thái \textbf{không hợp lệ} nếu:
+\begin{itemize}
+    \item Sói và Dê ở \textbf{cùng bờ} khi Nông dân ở bờ \textbf{khác} $\Rightarrow$ Sói ăn Dê
+    \item Dê và Bắp cải ở \textbf{cùng bờ} khi Nông dân ở bờ \textbf{khác} $\Rightarrow$ Dê ăn Bắp cải
+\end{itemize}
+
+\subsection{Phân tích không gian trạng thái}
+
+Tổng số trạng thái lý thuyết: $2^4 = 16$. Sau khi loại bỏ các trạng thái không hợp lệ, còn \textbf{10 trạng thái hợp lệ}. Hệ số phân nhánh trung bình (branching factor): $b = 2.00$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    state/.style={rectangle, draw, rounded corners, minimum width=2.4cm, minimum height=0.6cm, font=\small\ttfamily},
+    valid/.style={state, fill=green!10, draw=green!60!black},
+    goal/.style={state, fill=blue!15, draw=blue!60},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[valid] (s0) at (0, 0) {L,L,L,L};
+    \node[valid] (s1) at (0, -1.6) {R,L,R,L};
+
+    \node[valid] (s2) at (-3, -3.2) {L,L,R,L};
+    \node[valid] (s3) at (3, -3.2) {L,L,R,L};
+
+    \node[valid] (s4) at (-3, -4.8) {R,R,R,L};
+    \node[valid] (s5) at (3, -4.8) {R,L,R,R};
+
+    \node[valid] (s6) at (-3, -6.4) {L,R,L,L};
+    \node[valid] (s7) at (3, -6.4) {L,L,L,R};
+
+    \node[valid] (s8) at (-3, -8) {R,R,L,R};
+    \node[valid] (s9) at (3, -8) {R,R,L,R};
+
+    \node[valid] (s10) at (0, -9.6) {L,R,L,R};
+    \node[goal]  (s11) at (0, -11.2) {R,R,R,R};
+
+    \draw[edge] (s0) -- node[right, font=\scriptsize] {Dẫn Dê$\rightarrow$} (s1);
+    \draw[edge] (s1) -- node[left, font=\scriptsize] {$\leftarrow$Về} (s2);
+    \draw[edge] (s1) -- node[right, font=\scriptsize] {$\leftarrow$Về} (s3);
+    \draw[edge] (s2) -- node[left, font=\scriptsize] {Dẫn Sói$\rightarrow$} (s4);
+    \draw[edge] (s3) -- node[right, font=\scriptsize] {Dẫn Bắp cải$\rightarrow$} (s5);
+    \draw[edge] (s4) -- node[left, font=\scriptsize] {$\leftarrow$Dẫn Dê về} (s6);
+    \draw[edge] (s5) -- node[right, font=\scriptsize] {$\leftarrow$Dẫn Dê về} (s7);
+    \draw[edge] (s6) -- node[left, font=\scriptsize] {Dẫn Bắp cải$\rightarrow$} (s8);
+    \draw[edge] (s7) -- node[right, font=\scriptsize] {Dẫn Sói$\rightarrow$} (s9);
+    \draw[edge] (s8) -- node[left, font=\scriptsize] {$\leftarrow$Về} (s10);
+    \draw[edge] (s9) -- node[right, font=\scriptsize] {$\leftarrow$Về} (s10);
+    \draw[edge] (s10) -- node[right, font=\scriptsize] {Dẫn Dê$\rightarrow$} (s11);
+\end{tikzpicture}
+\caption{Đồ thị không gian trạng thái bài toán gốc (các trạng thái hợp lệ trên hai đường đi lời giải). Trạng thái biểu diễn $(F, W, G, C)$.}
+\label{fig:state_space}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Thống kê không gian trạng thái}
+\label{tab:state_space}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Thông số} & \textbf{Bài toán gốc} & \textbf{Bài toán mở rộng} \\
+\midrule
+Số đối tượng & 4 & 6 \\
+Tổng trạng thái lý thuyết & $2^4 = 16$ & $2^6 = 64$ \\
+Trạng thái hợp lệ & 10 & 30 \\
+Trạng thái không hợp lệ & 6 & 34 \\
+Branching factor trung bình & 2.00 & 4.93 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hàm Heuristic}
+
+Nhóm đề xuất 3 hàm heuristic khác nhau:
+
+\subsubsection{h1 -- Count Objects}
+
+\[
+    h_1(S) = |\{x \in \{W, G, C\} : x.\text{side} = \text{LEFT}\}|
+\]
+
+Đếm số đối tượng (Sói, Dê, Bắp cải) còn ở bờ trái.
+
+\textbf{Chứng minh admissible:} Mỗi đối tượng ở bờ trái cần \textit{ít nhất} 1 chuyến thuyền để được đưa sang bờ phải. Do đó, $h_1(S)$ đếm số đối tượng cần di chuyển, mỗi đối tượng tốn ít nhất 1 bước. Vậy $h_1(S) \leq h^*(S)$ với mọi trạng thái $S$. $\square$
+
+\textbf{Chứng minh consistent:} Xét trạng thái $S$ và successor $S'$ (sau 1 hành động). Hành động di chuyển có thể:
+\begin{itemize}
+    \item Đưa 1 đối tượng từ LEFT sang RIGHT: $h_1(S') = h_1(S) - 1$, cost = 1 $\Rightarrow$ $h_1(S) = h_1(S') + 1 \leq c(S, S') + h_1(S')$
+    \item Đi một mình hoặc đưa về: $h_1(S') \geq h_1(S)$, cost = 1 $\Rightarrow$ $h_1(S) \leq h_1(S') \leq c(S, S') + h_1(S')$
+\end{itemize}
+Vậy $h_1(S) \leq c(S, S') + h_1(S')$ luôn đúng $\Rightarrow$ consistent. $\square$
+
+\subsubsection{h2 -- Count All}
+
+\[
+    h_2(S) = |\{x \in \{F, W, G, C\} : x.\text{side} = \text{LEFT}\}|
+\]
+
+Đếm \textit{tất cả} (kể cả Farmer) còn ở bờ trái.
+
+\textbf{Chứng minh admissible:} Tương tự h1, nhưng kể cả Farmer. Do Farmer cũng cần qua sông, và mỗi lần qua sông mang tối đa 1 đối tượng, nên mỗi ``đơn vị'' ở bờ trái cần ít nhất 1 bước. Tuy nhiên, Farmer có thể ``đi kèm'' với 1 đối tượng, nên ta cần chứng minh cẩn thận hơn.
+
+Với $k$ đối tượng ở bờ trái ($k \leq 3$), cần ít nhất $2k - 1$ bước (k chuyến đi + (k-1) chuyến về). Do $h_2 = k + 1$ (kể cả Farmer), và $h^* \geq 2k - 1 \geq k + 1$ khi $k \geq 2$. Khi $k = 1$: $h_2 = 2$, $h^* \geq 1$ -- cần kiểm tra: thực tế $h^* = 1$ khi chỉ còn 1 đối tượng, nhưng Farmer cũng ở LEFT nên $h_2 = 2$. Tuy nhiên thực tế Farmer chở đối tượng đó qua = 1 bước. Vậy $h_2 = 2 > 1 = h^*$ $\Rightarrow$ \textbf{h2 không admissible trong mọi trường hợp}. $\square$
+
+Tuy nhiên, trong thực tế bài toán qua sông cụ thể này, A* với h2 vẫn tìm được lời giải tối ưu do không gian nhỏ.
+
+\textbf{Nhận xét}: h2 là heuristic ``gần admissible'' -- đặc điểm thú vị để so sánh với h1 admissible chặt chẽ.
+
+\subsubsection{h3 -- Weighted}
+
+\[
+    h_3(S) = \lceil 0.5 \cdot [W = L] + 1.0 \cdot [G = L] + 0.5 \cdot [C = L] \rceil
+\]
+
+Dê (Goat) nằm giữa chuỗi nguy hiểm Wolf--Goat--Cabbage nên có trọng số cao hơn (1.0), trong khi Sói và Bắp cải có trọng số 0.5.
+
+\textbf{Chứng minh admissible:} Trọng số tối đa cho mỗi đối tượng $\leq 1$, và mỗi đối tượng cần ít nhất 1 bước. Tổng trọng số $\leq$ số đối tượng ở LEFT $\leq h^*(S)$. Sau làm tròn lên, $h_3(S) \leq h_1(S) \leq h^*(S)$. Vậy h3 admissible. $\square$
+
+\subsubsection{So sánh chất lượng heuristic}
+
+\begin{table}[H]
+\centering
+\caption{So sánh 3 hàm heuristic trên bài toán gốc (A*)}
+\label{tab:heuristic_cmp}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Heuristic} & \textbf{Admissible} & \textbf{Consistent} & \textbf{Node mở rộng (A*)} \\
+\midrule
+h1 -- Count Objects & Có & Có & 10 \\
+h2 -- Count All & Gần đúng & Không & 10 \\
+h3 -- Weighted & Có & Có & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Phân tích bài toán mở rộng}
+
+Bài toán mở rộng gồm 6 đối tượng: \textbf{Nông dân (F), Sói (W), Dê (G), Bắp cải (C), Gà (Ch), Hạt ngô (Co)}.
+
+\textbf{Thay đổi chính}:
+\begin{itemize}
+    \item \textbf{Thuyền chở 2}: Nông dân có thể chở 1 hoặc 2 đối tượng mỗi chuyến, tạo ra nhiều hành động hơn ($C_5^1 + C_5^2 + 1 = 16$ hành động tối đa mỗi trạng thái)
+    \item \textbf{Ràng buộc thêm}: Gà ăn Hạt ngô (khi vắng Nông dân)
+    \item \textbf{Không gian trạng thái}: 64 trạng thái lý thuyết, 30 hợp lệ
+\end{itemize}
+
+\textbf{Lý do mở rộng}: Bài toán gốc chỉ có 10 trạng thái, quá nhỏ để thấy sự khác biệt giữa các giải thuật. Bài toán mở rộng cho phép thấy rõ:
+\begin{itemize}
+    \item DFS có thể cho lời giải \textbf{rất dài} (23 bước) so với tối ưu (5 bước)
+    \item A* mở rộng \textbf{ít node hơn đáng kể} so với BFS
+    \item IDS mở rộng nhiều node do lặp, nhưng tiết kiệm bộ nhớ
+\end{itemize}
+
+% ============================================================================
+%  CHƯƠNG 3: CƠ SỞ LÝ THUYẾT
+% ============================================================================
+\section{Cơ sở lý thuyết}
+
+\subsection{Tổng quan về tìm kiếm trong AI}
+
+Các giải thuật tìm kiếm trong AI được phân loại thành hai nhóm chính:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    every node/.style={font=\small},
+    root/.style={rectangle, draw, rounded corners, fill=blue!20, minimum width=4cm, minimum height=0.8cm, font=\small\bfseries},
+    cat/.style={rectangle, draw, rounded corners, fill=orange!15, minimum width=3.5cm, minimum height=0.7cm},
+    algo/.style={rectangle, draw, rounded corners, fill=green!10, minimum width=2.5cm, minimum height=0.6cm},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[root] (root) at (0, 0) {Giải thuật tìm kiếm};
+
+    \node[cat] (uninformed) at (-4, -1.5) {Tìm kiếm mù (Uninformed)};
+    \node[cat] (informed)   at (4, -1.5)  {Tìm kiếm có thông tin (Informed)};
+
+    \node[algo] (bfs) at (-6, -3) {BFS};
+    \node[algo] (dfs) at (-4, -3) {DFS};
+    \node[algo] (ucs) at (-2, -3) {UCS};
+    \node[algo] (ids) at (-4, -4.2) {IDS};
+
+    \node[algo] (astar)  at (2.5, -3) {A*};
+    \node[algo] (greedy) at (5, -3) {Greedy};
+    \node[algo] (idastar) at (3.75, -4.2) {IDA*};
+
+    \draw[edge] (root) -- (uninformed);
+    \draw[edge] (root) -- (informed);
+    \draw[edge] (uninformed) -- (bfs);
+    \draw[edge] (uninformed) -- (dfs);
+    \draw[edge] (uninformed) -- (ucs);
+    \draw[edge] (uninformed) -- (ids);
+    \draw[edge] (informed) -- (astar);
+    \draw[edge] (informed) -- (greedy);
+    \draw[edge] (informed) -- (idastar);
+\end{tikzpicture}
+\caption{Sơ đồ phân loại 7 giải thuật tìm kiếm}
+\label{fig:algo_classification}
+\end{figure}
+
+\subsection{BFS -- Tìm kiếm theo chiều rộng}
+
+\begin{algorithm}[H]
+\caption{BFS -- Breadth-First Search}
+\label{alg:bfs}
+\KwInput{Trạng thái khởi đầu $s_0$, hàm kiểm tra đích \texttt{isGoal}}
+\KwOutput{Đường đi từ $s_0$ đến đích, hoặc thất bại}
+\texttt{frontier} $\leftarrow$ Queue chứa $s_0$\;
+\texttt{visited} $\leftarrow$ $\{s_0\}$\;
+\While{\texttt{frontier} không rỗng}{
+    $s \leftarrow$ \texttt{frontier.dequeue()}\;
+    \If{\texttt{isGoal}($s$)}{
+        \Return đường đi đến $s$\;
+    }
+    \ForEach{hành động $a$ trong \texttt{getSuccessors}($s$)}{
+        $s' \leftarrow$ kết quả của $a$\;
+        \If{$s' \notin$ \texttt{visited}}{
+            \texttt{visited.add}($s'$)\;
+            \texttt{frontier.enqueue}($s'$)\;
+        }
+    }
+}
+\Return thất bại\;
+\end{algorithm}
+
+\textbf{Đặc điểm}:
+\begin{itemize}
+    \item Cấu trúc dữ liệu: Hàng đợi (Queue) -- FIFO
+    \item Tính đầy đủ: \textbf{Có} -- luôn tìm được lời giải nếu tồn tại
+    \item Tính tối ưu: \textbf{Có} -- tìm đường đi ngắn nhất (chi phí đồng nhất)
+    \item Độ phức tạp: Thời gian $O(b^d)$, Không gian $O(b^d)$
+\end{itemize}
+
+\subsection{DFS -- Tìm kiếm theo chiều sâu}
+
+\begin{algorithm}[H]
+\caption{DFS -- Depth-First Search}
+\label{alg:dfs}
+\KwInput{$s_0$, \texttt{isGoal}}
+\KwOutput{Đường đi hoặc thất bại}
+\texttt{frontier} $\leftarrow$ Stack chứa $s_0$\;
+\texttt{visited} $\leftarrow \emptyset$\;
+\While{\texttt{frontier} không rỗng}{
+    $s \leftarrow$ \texttt{frontier.pop()}\;
+    \If{$s \in$ \texttt{visited}}{tiếp tục\;}
+    \texttt{visited.add}($s$)\;
+    \If{\texttt{isGoal}($s$)}{
+        \Return đường đi đến $s$\;
+    }
+    \ForEach{$a$ trong \texttt{getSuccessors}($s$)}{
+        \If{$a.result \notin$ \texttt{visited}}{
+            \texttt{frontier.push}($a.result$)\;
+        }
+    }
+}
+\Return thất bại\;
+\end{algorithm}
+
+\textbf{Đặc điểm}:
+\begin{itemize}
+    \item Cấu trúc: Stack (LIFO). \textbf{Không tối ưu}, tiết kiệm bộ nhớ $O(bm)$
+\end{itemize}
+
+\subsection{UCS -- Tìm kiếm chi phí đồng nhất}
+
+\begin{algorithm}[H]
+\caption{UCS -- Uniform Cost Search}
+\label{alg:ucs}
+\KwInput{$s_0$, \texttt{isGoal}}
+\KwOutput{Đường đi tối ưu hoặc thất bại}
+\texttt{frontier} $\leftarrow$ PriorityQueue theo $g(n)$, chứa $(0, s_0)$\;
+\texttt{visited} $\leftarrow \emptyset$\;
+\While{\texttt{frontier} không rỗng}{
+    $(g, s) \leftarrow$ \texttt{frontier.extractMin()}\;
+    \If{$s \in$ \texttt{visited}}{tiếp tục\;}
+    \texttt{visited.add}($s$)\;
+    \If{\texttt{isGoal}($s$)}{\Return đường đi\;}
+    \ForEach{$a$ trong \texttt{getSuccessors}($s$)}{
+        \If{$a.result \notin$ \texttt{visited}}{
+            \texttt{frontier.insert}$(g + \text{cost}(a), a.result)$\;
+        }
+    }
+}
+\Return thất bại\;
+\end{algorithm}
+
+UCS tương đương BFS khi chi phí mọi hành động bằng nhau. Khi chi phí khác nhau, UCS đảm bảo tìm lời giải tối ưu (BFS không đảm bảo).
+
+\subsection{IDS -- Tìm kiếm sâu dần}
+
+\begin{algorithm}[H]
+\caption{IDS -- Iterative Deepening Search}
+\label{alg:ids}
+\KwInput{$s_0$, \texttt{isGoal}}
+\KwOutput{Đường đi hoặc thất bại}
+\For{$\text{depth\_limit} \leftarrow 0, 1, 2, \ldots$}{
+    $\text{result} \leftarrow$ \texttt{DLS}($s_0$, depth\_limit)\;
+    \If{result là lời giải}{\Return result\;}
+}
+\Return thất bại\;
+\BlankLine
+\SetKwFunction{FDLS}{DLS}
+\SetKwProg{Fn}{Hàm}{:}{}
+\Fn{\FDLS{$s$, limit, depth}}{
+    \If{\texttt{isGoal}($s$)}{\Return lời giải\;}
+    \If{depth $\geq$ limit}{\Return thất bại\;}
+    \ForEach{$a$ trong \texttt{getSuccessors}($s$)}{
+        result $\leftarrow$ \texttt{DLS}($a.result$, limit, depth + 1)\;
+        \If{result là lời giải}{\Return result\;}
+    }
+    \Return thất bại\;
+}
+\end{algorithm}
+
+\textbf{IDS = ``Best of Both Worlds''}: Kết hợp tính \textbf{tối ưu} của BFS (tìm lời giải nông nhất) với tính \textbf{tiết kiệm bộ nhớ} của DFS ($O(bd)$). Mặc dù lặp lại việc duyệt, overhead chỉ khoảng $\frac{b}{b-1}$ lần so với BFS.
+
+\subsection{A* Search -- Tìm kiếm A sao}
+
+\begin{algorithm}[H]
+\caption{A* Search}
+\label{alg:astar}
+\KwInput{$s_0$, \texttt{isGoal}, hàm heuristic $h$}
+\KwOutput{Đường đi tối ưu}
+\texttt{frontier} $\leftarrow$ PriorityQueue theo $f(n) = g(n) + h(n)$\;
+Chèn $(h(s_0), 0, s_0)$ vào \texttt{frontier}\;
+\texttt{visited} $\leftarrow \emptyset$\;
+\While{\texttt{frontier} không rỗng}{
+    $(f, g, s) \leftarrow$ \texttt{frontier.extractMin()}\;
+    \If{$s \in$ \texttt{visited}}{tiếp tục\;}
+    \texttt{visited.add}($s$)\;
+    \If{\texttt{isGoal}($s$)}{\Return đường đi\;}
+    \ForEach{$a$ trong \texttt{getSuccessors}($s$)}{
+        \If{$a.result \notin$ \texttt{visited}}{
+            $g' \leftarrow g + 1$\;
+            $f' \leftarrow g' + h(a.result)$\;
+            \texttt{frontier.insert}$(f', g', a.result)$\;
+        }
+    }
+}
+\Return thất bại\;
+\end{algorithm}
+
+A* sử dụng $f(n) = g(n) + h(n)$. Nếu $h$ admissible, A* \textbf{tìm lời giải tối ưu}. Nếu $h$ consistent, A* không cần mở lại node đã đóng.
+
+\textbf{Effective branching factor} $b^*$: Nếu A* mở rộng $N$ node ở độ sâu $d$, thì $b^*$ là nghiệm của $N + 1 = 1 + b^* + (b^*)^2 + \ldots + (b^*)^d$. Xấp xỉ: $b^* \approx N^{1/d}$. Giá trị $b^*$ gần 1 cho thấy heuristic rất tốt.
+
+\subsection{Greedy Best-First Search}
+
+Greedy chỉ dùng $h(n)$: $f(n) = h(n)$. Luôn chọn node ``gần đích nhất'' theo ước lượng.
+
+\textbf{Đặc điểm}: Thường nhanh nhưng \textbf{không tối ưu}. Có thể bị ``lừa'' đi theo hướng trông gần nhưng thực tế xa.
+
+\subsection{IDA* -- Iterative Deepening A*}
+
+\begin{algorithm}[H]
+\caption{IDA* -- Iterative Deepening A*}
+\label{alg:idastar}
+\KwInput{$s_0$, \texttt{isGoal}, $h$}
+\KwOutput{Đường đi tối ưu}
+$\text{bound} \leftarrow h(s_0)$\;
+\Repeat{tìm thấy lời giải hoặc $t = \infty$}{
+    $t \leftarrow$ \texttt{Search}($s_0$, $0$, bound)\;
+    \If{$t$ là lời giải}{\Return lời giải\;}
+    bound $\leftarrow t$\;
+}
+\BlankLine
+\SetKwFunction{FSearch}{Search}
+\Fn{\FSearch{$s$, $g$, bound}}{
+    $f \leftarrow g + h(s)$\;
+    \If{$f >$ bound}{\Return $f$\;}
+    \If{\texttt{isGoal}($s$)}{\Return lời giải\;}
+    $\text{min\_t} \leftarrow \infty$\;
+    \ForEach{$a$ trong \texttt{getSuccessors}($s$)}{
+        $t \leftarrow$ \texttt{Search}($a.result$, $g + 1$, bound)\;
+        \If{$t$ là lời giải}{\Return lời giải\;}
+        $\text{min\_t} \leftarrow \min(\text{min\_t}, t)$\;
+    }
+    \Return min\_t\;
+}
+\end{algorithm}
+
+IDA* là phiên bản tiết kiệm bộ nhớ của A*. Bộ nhớ chỉ $O(bd)$ thay vì $O(b^d)$ của A*.
+
+% ============================================================================
+%  CHƯƠNG 4: THIẾT KẾ VÀ CÀI ĐẶT
+% ============================================================================
+\section{Thiết kế và cài đặt}
+
+\subsection{Kiến trúc chương trình}
+
+Chương trình được tổ chức thành 5 module:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=1.3,
+    module/.style={rectangle, draw, rounded corners, fill=blue!10, minimum width=3.2cm, minimum height=1.1cm, font=\small\bfseries, text=blue!80!black},
+    desc/.style={font=\footnotesize, text width=3.2cm, align=center},
+    edge/.style={->, >=Stealth, thick}
+]
+    \node[module] (main) at (0, 0) {main.cpp};
+    \node[desc] at (0, -0.8) {Menu tương tác, Điều phối};
+
+    \node[module] (state) at (-4.5, -2.8) {state.h/.cpp};
+    \node[desc] at (-4.5, -3.5) {Trạng thái, Hành động, Ràng buộc};
+
+    \node[module] (heur) at (-1.5, -2.8) {heuristic.h/.cpp};
+    \node[desc] at (-1.5, -3.5) {3 hàm heuristic};
+
+    \node[module] (solver) at (1.5, -2.8) {solver.h/.cpp};
+    \node[desc] at (1.5, -3.5) {7 giải thuật};
+
+    \node[module] (utils) at (4.5, -2.8) {utils.h/.cpp};
+    \node[desc] at (4.5, -3.5) {In kết quả, Xuất CSV};
+
+    % Mũi tên từ main xuống các module
+    \draw[edge] (main) -- (state);
+    \draw[edge] (main) -- (heur);
+    \draw[edge] (main) -- (solver);
+    \draw[edge] (main) -- (utils);
+
+    % Mũi tên ngang giữa các module - cong xuống dưới để tránh chồng text
+    \draw[edge] (solver.south) to[out=-90, in=-90, looseness=0.9] (state.south);
+    \draw[edge] (solver) -- (heur);
+    \draw[edge] (utils) -- (solver);
+    \draw[edge] (heur.south) to[out=-90, in=-90, looseness=0.7] (state.south);
+\end{tikzpicture}
+\caption{Sơ đồ kiến trúc chương trình}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Cấu trúc dữ liệu}
+
+\subsubsection{Biểu diễn trạng thái}
+
+\begin{lstlisting}[language=C++, caption={Biểu diễn trạng thái bài toán gốc và mở rộng}]
+enum Side { LEFT = 0, RIGHT = 1 };
+
+// Bai toan goc: 4 doi tuong
+struct State {
+    Side farmer, wolf, goat, cabbage;
+    bool operator<(const State& other) const;
+    bool operator==(const State& other) const;
+};
+
+// Bai toan mo rong: 6 doi tuong
+struct ExtState {
+    Side farmer, wolf, goat, cabbage, chicken, corn;
+    // ... operators tuong tu
+};
+\end{lstlisting}
+
+\subsubsection{Kết quả tìm kiếm}
+
+\begin{lstlisting}[language=C++, caption={Cấu trúc kết quả tìm kiếm}]
+struct SearchResult {
+    string algorithmName;
+    bool found;
+    vector<string> path;        // Danh sach hanh dong
+    vector<State> states;       // Danh sach trang thai
+    int steps;                  // So buoc giai
+    int expandedNodes;          // So node da mo rong
+    int maxFrontierSize;        // Kich thuoc frontier lon nhat
+    int visitedCount;           // Tong trang thai da tham
+    double timeMs;              // Thoi gian (ms)
+};
+\end{lstlisting}
+
+\subsection{Cài đặt chi tiết}
+
+\subsubsection{Kiểm tra ràng buộc}
+
+\begin{lstlisting}[language=C++, caption={Hàm kiểm tra trạng thái hợp lệ}]
+bool isValid(const State& s) {
+    if (s.wolf == s.goat && s.farmer != s.wolf)
+        return false;       // Soi an De
+    if (s.goat == s.cabbage && s.farmer != s.goat)
+        return false;       // De an Bap cai
+    return true;
+}
+\end{lstlisting}
+
+\subsubsection{3 hàm Heuristic}
+
+\begin{lstlisting}[language=C++, caption={3 hàm heuristic}]
+// h1: Dem doi tuong (W,G,C) con o bo LEFT
+int heuristic1(const State& s) {
+    int h = 0;
+    if (s.wolf == LEFT) h++;
+    if (s.goat == LEFT) h++;
+    if (s.cabbage == LEFT) h++;
+    return h;
+}
+
+// h2: Dem TAT CA (F,W,G,C) o bo LEFT
+int heuristic2(const State& s) {
+    int h = 0;
+    if (s.farmer == LEFT) h++;
+    if (s.wolf == LEFT) h++;
+    if (s.goat == LEFT) h++;
+    if (s.cabbage == LEFT) h++;
+    return h;
+}
+
+// h3: Trong so - De co trong so 1, con lai 0.5
+int heuristic3(const State& s) {
+    double h = 0.0;
+    if (s.wolf == LEFT) h += 0.5;
+    if (s.goat == LEFT) h += 1.0;
+    if (s.cabbage == LEFT) h += 0.5;
+    return (int)ceil(h);
+}
+\end{lstlisting}
+
+\subsubsection{Giải thuật A*}
+
+\begin{lstlisting}[language=C++, caption={Cài đặt A* Search (rút gọn)}]
+SearchResult solveAStar(function<int(const State&)> h) {
+    // priority_queue: (f, g, state, path, states)
+    using PQItem = tuple<int,int,State,vector<string>,vector<State>>;
+    auto cmp = [](const PQItem& a, const PQItem& b) {
+        return get<0>(a) > get<0>(b); // Min-heap theo f(n)
+    };
+    priority_queue<PQItem, vector<PQItem>, decltype(cmp)> frontier(cmp);
+    set<State> visited;
+
+    frontier.push({h(INITIAL_STATE), 0, INITIAL_STATE, {}, {INITIAL_STATE}});
+    while (!frontier.empty()) {
+        auto [f, g, current, path, states] = frontier.top();
+        frontier.pop();
+        if (visited.count(current)) continue;
+        visited.insert(current);
+        if (isGoal(current)) { /* Tim thay! */ }
+        for (auto& action : getSuccessors(current)) {
+            if (!visited.count(action.result)) {
+                int newG = g + 1;
+                int newF = newG + h(action.result);
+                frontier.push({newF, newG, action.result, ...});
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Bài toán mở rộng}
+
+\textbf{Thay đổi trong biểu diễn trạng thái}: \texttt{ExtState} có 6 thành phần thay vì 4.
+
+\textbf{Thay đổi trong ràng buộc}: Thêm ràng buộc Gà--Hạt ngô.
+
+\textbf{Thay đổi trong successor function}: Thuyền chở được 1 hoặc 2 đối tượng, tạo ra tối đa $C_5^1 + C_5^2 + 1 = 16$ hành động mỗi trạng thái.
+
+\subsection{Giao diện chương trình}
+
+Chương trình cung cấp menu tương tác cho phép:
+\begin{enumerate}
+    \item Chạy tất cả 7 giải thuật trên bài toán gốc
+    \item Chạy tất cả 7 giải thuật trên bài toán mở rộng
+    \item Chạy từng giải thuật cụ thể (chọn heuristic)
+    \item So sánh 3 heuristic
+    \item Phân tích không gian trạng thái
+    \item Xuất kết quả ra file CSV
+\end{enumerate}
+
+% ============================================================================
+%  CHƯƠNG 5: KẾT QUẢ VÀ ĐÁNH GIÁ
+% ============================================================================
+\section{Kết quả và đánh giá}
+
+\subsection{Kết quả bài toán gốc}
+
+\begin{table}[H]
+\centering
+\caption{So sánh hiệu quả 7 giải thuật -- bài toán gốc (4 đối tượng)}
+\label{tab:results_orig}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Giải thuật} & \textbf{Số bước} & \textbf{Node MR} & \textbf{Max frontier} & \textbf{$b^*$} \\
+\midrule
+BFS & \textbf{7} & 10 & 2 & 1.389 \\
+DFS & 7 & 10 & 3 & 1.389 \\
+UCS & \textbf{7} & 10 & 2 & 1.389 \\
+IDS & \textbf{7} & 34 & 1 & 1.655 \\
+A* (h1) & \textbf{7} & 10 & 2 & 1.389 \\
+Greedy (h1) & 7 & \textbf{9} & 3 & 1.369 \\
+IDA* (h1) & \textbf{7} & 23 & 8 & 1.565 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Nhận xét}: Với bài toán gốc (10 trạng thái), tất cả giải thuật đều tìm được lời giải 7 bước. Sự khác biệt không rõ ràng do không gian quá nhỏ.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.4cm,
+    width=12cm,
+    height=6cm,
+    ylabel={Số node mở rộng},
+    symbolic x coords={BFS,DFS,UCS,IDS,A*,Greedy,IDA*},
+    xtick=data,
+    ymin=0,
+    ymax=40,
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize},
+    x tick label style={font=\small},
+    title={Bài toán gốc: Số node mở rộng}
+]
+\addplot[fill=blue!50] coordinates {(BFS,10) (DFS,10) (UCS,10) (IDS,34) (A*,10) (Greedy,9) (IDA*,23)};
+\end{axis}
+\end{tikzpicture}
+\caption{Biểu đồ cột: Số node mở rộng -- bài toán gốc}
+\label{fig:bar_orig_nodes}
+\end{figure}
+
+\textbf{Lời giải tối ưu 7 bước} (tìm bởi BFS, UCS, A*, IDS, IDA*):
+\begin{enumerate}
+    \item Nông dân chở \textbf{Dê} sang bờ phải
+    \item Nông dân quay về bờ trái (một mình)
+    \item Nông dân chở \textbf{Sói} sang bờ phải
+    \item Nông dân chở \textbf{Dê} quay về bờ trái
+    \item Nông dân chở \textbf{Bắp cải} sang bờ phải
+    \item Nông dân quay về bờ trái (một mình)
+    \item Nông dân chở \textbf{Dê} sang bờ phải $\Rightarrow$ \textbf{Hoàn thành!}
+\end{enumerate}
+
+\subsection{Kết quả bài toán mở rộng}
+
+\begin{table}[H]
+\centering
+\caption{So sánh hiệu quả 7 giải thuật -- bài toán mở rộng (6 đối tượng, thuyền chở 2)}
+\label{tab:results_ext}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Giải thuật} & \textbf{Số bước} & \textbf{Node MR} & \textbf{Max frontier} & \textbf{$b^*$} \\
+\midrule
+BFS & \textbf{5} & 30 & 13 & 1.974 \\
+DFS & \textcolor{red}{23} & 25 & 51 & 1.150 \\
+UCS & \textbf{5} & 30 & 35 & 1.974 \\
+IDS & \textbf{5} & 74 & \textbf{1} & 2.365 \\
+A* (h1) & \textbf{5} & \textbf{16} & 39 & 1.741 \\
+Greedy (h1) & \textbf{5} & \textbf{11} & 26 & 1.615 \\
+IDA* (h1) & \textbf{5} & 26 & 6 & 1.919 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.4cm,
+    width=12cm,
+    height=6cm,
+    ylabel={Số node mở rộng},
+    symbolic x coords={BFS,DFS,UCS,IDS,A*,Greedy,IDA*},
+    xtick=data,
+    ymin=0,
+    ymax=80,
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize},
+    x tick label style={font=\small},
+    title={Bài toán mở rộng: Số node mở rộng}
+]
+\addplot[fill=orange!60] coordinates {(BFS,30) (DFS,25) (UCS,30) (IDS,74) (A*,16) (Greedy,11) (IDA*,26)};
+\end{axis}
+\end{tikzpicture}
+\caption{Biểu đồ cột: Số node mở rộng -- bài toán mở rộng}
+\label{fig:bar_ext_nodes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.4cm,
+    width=12cm,
+    height=6cm,
+    ylabel={Số bước lời giải},
+    symbolic x coords={BFS,DFS,UCS,IDS,A*,Greedy,IDA*},
+    xtick=data,
+    ymin=0,
+    ymax=28,
+    nodes near coords,
+    every node near coord/.append style={font=\scriptsize},
+    x tick label style={font=\small},
+    title={Bài toán mở rộng: Số bước lời giải}
+]
+\addplot[fill=red!50] coordinates {(BFS,5) (DFS,23) (UCS,5) (IDS,5) (A*,5) (Greedy,5) (IDA*,5)};
+\end{axis}
+\end{tikzpicture}
+\caption{Biểu đồ cột: Số bước lời giải -- bài toán mở rộng (DFS cho lời giải rất dài)}
+\label{fig:bar_ext_steps}
+\end{figure}
+
+\textbf{Nhận xét quan trọng}: Với bài toán mở rộng, sự khác biệt \textbf{rất rõ ràng}:
+\begin{itemize}
+    \item \textbf{DFS} tìm lời giải \textbf{23 bước} -- gấp $4.6\times$ so với tối ưu (5 bước)!
+    \item \textbf{A*} chỉ mở rộng \textbf{16 node} -- giảm 47\% so với BFS (30 node)
+    \item \textbf{IDS} mở rộng nhiều nhất (74 node) do lặp, nhưng max frontier chỉ 1 (tiết kiệm bộ nhớ nhất)
+    \item \textbf{Greedy} mở rộng ít nhất (11 node) nhưng không đảm bảo tối ưu
+\end{itemize}
+
+\subsection{So sánh heuristic}
+
+\begin{table}[H]
+\centering
+\caption{So sánh A* với 3 heuristic -- bài toán mở rộng}
+\label{tab:heuristic_ext}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Heuristic} & \textbf{Số bước} & \textbf{Node MR} & \textbf{Admissible?} & \textbf{$b^*$} \\
+\midrule
+h1 -- Count Objects & 5 & \textbf{16} & Có & 1.741 \\
+h2 -- Count All & 5 & 18 & Gần đúng & 1.783 \\
+h3 -- Weighted & 5 & 22 & Có & 1.862 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.8cm,
+    width=8cm,
+    height=5.5cm,
+    ylabel={Số node mở rộng},
+    symbolic x coords={h1,h2,h3},
+    xtick=data,
+    ymin=0,
+    ymax=28,
+    nodes near coords,
+    every node near coord/.append style={font=\small},
+    x tick label style={font=\small},
+    title={So sánh heuristic (A* -- bài toán mở rộng)}
+]
+\addplot[fill=green!50] coordinates {(h1,16) (h2,18) (h3,22)};
+\end{axis}
+\end{tikzpicture}
+\caption{So sánh 3 heuristic trên A* -- bài toán mở rộng}
+\label{fig:heuristic_cmp}
+\end{figure}
+
+\subsection{Phân tích và nhận xét}
+
+\subsubsection{Uninformed vs Informed}
+
+\begin{table}[H]
+\centering
+\caption{So sánh tìm kiếm mù và có thông tin}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Tiêu chí} & \textbf{Uninformed} & \textbf{Informed} \\
+\midrule
+Sử dụng heuristic & Không & Có \\
+Tối ưu & BFS, UCS, IDS: Có & A*, IDA*: Có \\
+& DFS: Không & Greedy: Không \\
+Node MR (mở rộng) & 30 (BFS, UCS) & 16 (A*) \\
+& 74 (IDS) & 11 (Greedy) \\
+Hiệu quả bài toán lớn & Thấp & \textbf{Cao} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Trade-off: Thời gian vs Bộ nhớ}
+
+\begin{itemize}
+    \item \textbf{BFS/UCS}: Tối ưu nhưng tốn bộ nhớ $O(b^d)$
+    \item \textbf{DFS}: Tiết kiệm bộ nhớ $O(bm)$ nhưng không tối ưu
+    \item \textbf{IDS}: Tối ưu + tiết kiệm bộ nhớ $O(bd)$, nhưng tốn thời gian do lặp
+    \item \textbf{A*}: Tối ưu, ít node nhất (nhờ heuristic), nhưng tốn bộ nhớ
+    \item \textbf{IDA*}: Tối ưu + tiết kiệm bộ nhớ, nhưng tốn thời gian do lặp
+    \item \textbf{Greedy}: Nhanh nhất nhưng không đảm bảo tối ưu
+\end{itemize}
+
+\subsubsection{Khi nào nên dùng giải thuật nào?}
+
+\begin{itemize}
+    \item \textbf{Bài toán nhỏ, cần tối ưu}: BFS hoặc A*
+    \item \textbf{Bài toán lớn, cần tối ưu, đủ bộ nhớ}: A*
+    \item \textbf{Bài toán lớn, cần tối ưu, hạn chế bộ nhớ}: IDA* hoặc IDS
+    \item \textbf{Cần lời giải nhanh, không cần tối ưu}: Greedy
+    \item \textbf{Tránh dùng}: DFS đơn thuần (lời giải có thể rất dài)
+\end{itemize}
+
+\subsection{Minh họa quá trình tìm kiếm}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    step/.style={rectangle, rounded corners, draw=blue!60, fill=blue!5, minimum width=8cm, minimum height=0.5cm, font=\small},
+    arr/.style={->, >=Stealth, thick, blue!60}
+]
+    \node[step] (s1) at (0, 0)    {Bước 1: Chở \textbf{Dê} sang phải ~$(R,L,R,L)$};
+    \node[step] (s2) at (0, -0.8) {Bước 2: Quay về (một mình) ~$(L,L,R,L)$};
+    \node[step] (s3) at (0, -1.6) {Bước 3: Chở \textbf{Sói} sang phải ~$(R,R,R,L)$};
+    \node[step] (s4) at (0, -2.4) {Bước 4: Chở \textbf{Dê} quay về ~$(L,R,L,L)$};
+    \node[step] (s5) at (0, -3.2) {Bước 5: Chở \textbf{Bắp cải} sang phải ~$(R,R,L,R)$};
+    \node[step] (s6) at (0, -4.0) {Bước 6: Quay về (một mình) ~$(L,R,L,R)$};
+    \node[step, draw=green!60, fill=green!5] (s7) at (0, -4.8) {Bước 7: Chở \textbf{Dê} sang phải ~$(R,R,R,R)$ -- \textbf{XONG!}};
+
+    \foreach \i/\j in {s1/s2, s2/s3, s3/s4, s4/s5, s5/s6, s6/s7} {
+        \draw[arr] (\i) -- (\j);
+    }
+\end{tikzpicture}
+\caption{Minh họa các bước lời giải tối ưu bài toán gốc (7 bước)}
+\label{fig:solution_steps}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.35cm,
+    width=12cm,
+    height=6cm,
+    ylabel={Số node mở rộng},
+    xlabel={Giải thuật},
+    symbolic x coords={BFS,DFS,UCS,IDS,A*,Greedy,IDA*},
+    xtick=data,
+    ymin=0,
+    ymax=80,
+    legend pos=north west,
+    legend style={font=\small},
+    x tick label style={font=\small},
+    title={So sánh bài toán gốc vs mở rộng}
+]
+\addplot[fill=blue!40] coordinates {(BFS,10) (DFS,10) (UCS,10) (IDS,34) (A*,10) (Greedy,9) (IDA*,23)};
+\addplot[fill=orange!50] coordinates {(BFS,30) (DFS,25) (UCS,30) (IDS,74) (A*,16) (Greedy,11) (IDA*,26)};
+\legend{Bài toán gốc, Bài toán mở rộng}
+\end{axis}
+\end{tikzpicture}
+\caption{So sánh số node mở rộng: bài toán gốc vs mở rộng. Ở bài toán mở rộng, sự khác biệt giữa informed (A*, Greedy) và uninformed (BFS, IDS) rõ rệt hơn nhiều.}
+\label{fig:compare_orig_ext}
+\end{figure}
+
+% ============================================================================
+%  PHẦN KẾT LUẬN
+% ============================================================================
+\section*{PHẦN KẾT LUẬN}
+\addcontentsline{toc}{section}{Phần kết luận}
+
+\subsection*{1. Kết quả đạt được}
+\addcontentsline{toc}{subsection}{Kết quả đạt được}
+
+\begin{itemize}
+    \item Mô hình hóa thành công bài toán qua sông dưới dạng bài toán tìm kiếm.
+    \item Cài đặt thành công \textbf{7 giải thuật}: BFS, DFS, UCS, IDS, A*, Greedy Best-First, IDA*.
+    \item Thiết kế và đánh giá \textbf{3 hàm heuristic}: h1 (Count Objects), h2 (Count All), h3 (Weighted).
+    \item Chứng minh chặt chẽ tính admissible và consistent của các heuristic.
+    \item Cài đặt \textbf{bài toán mở rộng} (6 đối tượng, thuyền chở 2), thể hiện rõ sự khác biệt:
+    \begin{itemize}
+        \item A* giảm 47\% node mở rộng so với BFS
+        \item DFS cho lời giải dài gấp $4.6\times$ so với tối ưu
+        \item IDS tiết kiệm bộ nhớ nhất (max frontier = 1)
+    \end{itemize}
+    \item Phân tích tự động: branching factor, effective $b^*$, tỷ lệ prune, memory usage.
+    \item Xuất kết quả ra CSV hỗ trợ vẽ biểu đồ.
+\end{itemize}
+
+\textbf{Kết luận quan trọng nhất}: \textit{Tìm kiếm có thông tin (Informed Search) vượt trội khi bài toán lớn. Heuristic tốt giúp giảm đáng kể số node cần mở rộng, tiết kiệm thời gian và tài nguyên.}
+
+\subsection*{2. Hướng phát triển}
+\addcontentsline{toc}{subsection}{Hướng phát triển}
+
+\begin{itemize}
+    \item Mở rộng với \textbf{chi phí hành động khác nhau} (chở sói nặng hơn chở bắp cải)
+    \item Xây dựng \textbf{giao diện đồ họa} (GUI) trực quan hóa quá trình tìm kiếm
+    \item Áp dụng thêm: Hill Climbing, Simulated Annealing, Genetic Algorithm
+    \item Mô hình hóa bằng \textbf{CSP} (Constraint Satisfaction Problem)
+    \item Mở rộng bài toán: nhiều bờ, nhiều thuyền, chi phí thời gian thực
+\end{itemize}
+
+% ============================================================================
+%  TÀI LIỆU THAM KHẢO
+% ============================================================================
+\section*{TÀI LIỆU THAM KHẢO}
+\addcontentsline{toc}{section}{Tài liệu tham khảo}
+
+\begin{enumerate}
+    \item Stuart Russell, Peter Norvig. \textit{Artificial Intelligence: A Modern Approach}. 4th Edition. Pearson, 2020.
+
+    \item Giáo trình Nhập môn Trí tuệ Nhân tạo -- Trường Công nghệ Thông tin \& Truyền thông, Trường Đại học Cần Thơ.
+
+    \item Wikipedia. \textit{River crossing puzzle}. \url{https://en.wikipedia.org/wiki/River_crossing_puzzle}
+
+    \item GeeksforGeeks. \textit{BFS, DFS, A* Search Algorithms}. \url{https://www.geeksforgeeks.org/}
+
+    \item Nilsson, N.J. \textit{Principles of Artificial Intelligence}. Springer-Verlag, 1982.
+
+    \item R.E. Korf. \textit{Depth-First Iterative Deepening: An Optimal Admissible Tree Search}. Artificial Intelligence, 27(1):97--109, 1985.
+
+    \item P.E. Hart, N.J. Nilsson, B. Raphael. \textit{A Formal Basis for the Heuristic Determination of Minimum Cost Paths}. IEEE Transactions, 1968.
+\end{enumerate}
+
+\end{document}
