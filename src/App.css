@@ -1,0 +1,273 @@
+.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 11% 13%, rgba(16, 185, 129, 0.2), transparent 36%),
+    radial-gradient(circle at 84% 16%, rgba(59, 130, 246, 0.22), transparent 32%),
+    linear-gradient(165deg, #f8fafc 0%, #eff6ff 48%, #fefce8 100%);
+}
+
+.hero-header {
+  background: transparent !important;
+  text-align: center;
+  height: auto;
+  line-height: 1.35;
+  padding: 34px 16px 10px;
+}
+
+.hero-title {
+  margin-bottom: 4px !important;
+  font-size: clamp(1.8rem, 2.4vw, 2.6rem) !important;
+  letter-spacing: 0.01em;
+}
+
+.hero-subtitle {
+  max-width: 780px;
+  margin: 0 auto !important;
+  color: #334155;
+}
+
+.app-content {
+  padding: 8px 8px 20px;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-card,
+.metric-card,
+.step-card,
+.river-card,
+.pseudo-card,
+.tree-card,
+.history-card {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(2px);
+}
+
+.control-card.ant-card,
+.metric-card.ant-card,
+.step-card.ant-card,
+.river-card.ant-card,
+.pseudo-card.ant-card,
+.tree-card.ant-card,
+.history-card.ant-card {
+  border: none !important;
+}
+
+.control-card .ant-card-head,
+.metric-card .ant-card-head,
+.step-card .ant-card-head,
+.river-card .ant-card-head,
+.pseudo-card .ant-card-head,
+.tree-card .ant-card-head,
+.history-card .ant-card-head {
+  border-bottom: none;
+}
+
+.control-card .ant-card-body,
+.metric-card .ant-card-body,
+.step-card .ant-card-body,
+.river-card .ant-card-body,
+.pseudo-card .ant-card-body,
+.tree-card .ant-card-body,
+.history-card .ant-card-body {
+  padding: 14px;
+}
+
+.workspace-row,
+.dashboard-row {
+  margin-top: 0 !important;
+}
+
+.action-button {
+  min-width: 150px;
+}
+
+.step-note {
+  margin-top: 10px !important;
+  margin-bottom: 0 !important;
+}
+
+.river-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.bank {
+  min-height: 188px;
+  border-radius: 12px;
+  padding: 12px;
+  background: linear-gradient(180deg, #fef3c7 0%, #fdba74 100%);
+  color: #1e293b;
+  border: none;
+}
+
+.bank h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+}
+
+.tokens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 126px;
+}
+
+.entity-token {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.75);
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.entity-avatar {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.token-empty {
+  display: grid;
+  place-items: center;
+  min-height: 118px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.45);
+  font-style: italic;
+  color: #475569;
+}
+
+.river {
+  position: relative;
+  min-height: 188px;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #7dd3fc 0%, #0369a1 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 12px, transparent 12px 24px);
+  border: none;
+}
+
+.boat {
+  position: absolute;
+  bottom: 16px;
+  transition: left 620ms cubic-bezier(0.4, 0.04, 0.2, 1);
+}
+
+.boat-image {
+  width: 86px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(15, 23, 42, 0.35));
+}
+
+.boat.left {
+  left: 16px;
+}
+
+.boat.right {
+  left: calc(100% - 102px);
+}
+
+.river-legend {
+  margin-top: 12px;
+}
+
+.pseudo-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pseudo-line {
+  border-radius: 8px;
+  padding: 7px 9px;
+  background: #f8fafc;
+  transition: all 240ms ease;
+}
+
+.pseudo-line.active {
+  background: #fff7ed;
+  transform: translateX(4px);
+}
+
+.tree-wrap {
+  height: 560px;
+  min-height: 560px;
+  max-height: 560px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.compact-metrics-row .ant-col {
+  min-width: 0;
+}
+
+.compact-stat .ant-statistic-title {
+  font-size: 12px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.compact-stat .ant-statistic-content {
+  font-size: clamp(18px, 1.8vw, 24px);
+}
+
+@media (min-width: 1201px) {
+  .compact-metrics-row {
+    flex-wrap: nowrap;
+  }
+}
+
+.history-card .ant-table-wrapper {
+  min-height: 560px;
+}
+
+@media (max-width: 1200px) {
+  .tree-wrap {
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+  }
+
+  .history-card .ant-table-wrapper {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-content {
+    padding: 6px 6px 18px;
+  }
+
+  .river-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .river {
+    min-height: 150px;
+  }
+
+  .boat.right {
+    left: calc(100% - 98px);
+  }
+
+  .tree-wrap {
+    height: 420px;
+    min-height: 420px;
+    max-height: 420px;
+  }
+}

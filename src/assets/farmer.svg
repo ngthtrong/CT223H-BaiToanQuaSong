@@ -1,0 +1,17 @@
+<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Farmer">
+  <defs>
+    <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="48" cy="87" rx="24" ry="6" fill="#cbd5e1"/>
+  <circle cx="48" cy="27" r="12" fill="#f8d4b6"/>
+  <rect x="35" y="38" width="26" height="27" rx="8" fill="url(#shirt)"/>
+  <rect x="28" y="42" width="10" height="22" rx="5" fill="#f8d4b6"/>
+  <rect x="58" y="42" width="10" height="22" rx="5" fill="#f8d4b6"/>
+  <rect x="37" y="63" width="8" height="18" rx="4" fill="#334155"/>
+  <rect x="51" y="63" width="8" height="18" rx="4" fill="#334155"/>
+  <rect x="31" y="16" width="34" height="8" rx="4" fill="#a16207"/>
+  <rect x="25" y="21" width="46" height="6" rx="3" fill="#ca8a04"/>
+</svg>

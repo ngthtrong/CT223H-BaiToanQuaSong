@@ -1,0 +1,6 @@
+<svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Boat">
+  <ellipse cx="60" cy="70" rx="38" ry="6" fill="#bae6fd"/>
+  <path d="M18 52 H102 L90 66 H30 Z" fill="#92400e"/>
+  <rect x="56" y="24" width="4" height="28" fill="#78350f"/>
+  <path d="M60 24 L88 38 L60 52 Z" fill="#fef3c7"/>
+</svg>
