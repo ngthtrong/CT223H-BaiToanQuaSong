@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Col,
+  ConfigProvider,
   Divider,
   Flex,
   Layout,
@@ -12,11 +13,15 @@ import {
   Select,
   Space,
   Statistic,
+  Switch,
   Table,
   Tag,
   Typography,
+  theme,
 } from 'antd'
 import {
+  BulbOutlined,
+  MoonOutlined,
   PauseCircleOutlined,
   PlayCircleOutlined,
   RedoOutlined,
@@ -66,6 +71,12 @@ function App() {
   const [stepIndex, setStepIndex] = useState(0)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [playing, setPlaying] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const saved = window.localStorage.getItem('app-theme-mode')
+    if (saved === 'dark') return true
+    if (saved === 'light') return false
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+  })
 
   const isHeuristicEnabled = requiresHeuristic(algorithm)
 
@@ -131,6 +142,10 @@ function App() {
       solutionPath: result.solutionPathNodeIds.filter((id) => visibleIds.has(id)),
     }
   }, [mode, result, stepIndex])
+
+  useEffect(() => {
+    window.localStorage.setItem('app-theme-mode', isDarkMode ? 'dark' : 'light')
+  }, [isDarkMode])
 
   useEffect(() => {
     if (!playing || !result || mode !== 'step') {
@@ -203,17 +218,42 @@ function App() {
   ]
 
   return (
-    <Layout className="app-shell">
-      <Header className="hero-header">
-        <Title level={2} className="hero-title">
-          Bài toán Qua Sông
-        </Title>
-        <Paragraph className="hero-subtitle">
-          Công cụ giảng dạy trực quan cho bài toán Nông dân - Sói - Dê - Bắp cải
-        </Paragraph>
-      </Header>
+    <ConfigProvider
+      theme={{
+        algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#0ea5e9',
+          borderRadius: 12,
+          colorBgBase: isDarkMode ? '#070b14' : '#f8fafc',
+          colorTextBase: isDarkMode ? '#e2e8f0' : '#0f172a',
+          colorBorder: isDarkMode ? 'rgba(148, 163, 184, 0.26)' : 'rgba(15, 23, 42, 0.16)',
+        },
+      }}
+    >
+      <Layout className={`app-shell ${isDarkMode ? 'theme-dark' : 'theme-light'}`}>
+        <Header className="hero-header">
+          <div className="hero-toolbar">
+            <div>
+              <Title level={2} className="hero-title">
+                Bài toán Qua Sông
+              </Title>
+              <Paragraph className="hero-subtitle">
+                Công cụ giảng dạy trực quan cho bài toán Nông dân - Sói - Dê - Bắp cải
+              </Paragraph>
+            </div>
+            <Space className="theme-switch-wrap" size={8}>
+              <Text className="theme-switch-label">Dark mode</Text>
+              <Switch
+                checked={isDarkMode}
+                onChange={setIsDarkMode}
+                checkedChildren={<MoonOutlined />}
+                unCheckedChildren={<BulbOutlined />}
+              />
+            </Space>
+          </div>
+        </Header>
 
-      <Content className="app-content">
+        <Content className="app-content">
         <Card className="control-card">
           <Row gutter={[16, 16]} align="middle">
             <Col xs={24} md={6}>
@@ -308,6 +348,7 @@ function App() {
                 nodes={visibleTree.nodes}
                 solutionPath={visibleTree.solutionPath}
                 showEvaluation={Boolean(result?.heuristic)}
+                isDarkMode={isDarkMode}
                 selectedNodeId={activeNodeId}
                 onSelectNode={setSelectedNodeId}
               />
@@ -366,8 +407,9 @@ function App() {
             </Card>
           </Col>
         </Row>
-      </Content>
-    </Layout>
+        </Content>
+      </Layout>
+    </ConfigProvider>
   )
 }
 

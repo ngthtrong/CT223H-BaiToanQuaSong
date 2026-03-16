@@ -1,17 +1,26 @@
 .app-shell {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 11% 13%, rgba(16, 185, 129, 0.2), transparent 36%),
-    radial-gradient(circle at 84% 16%, rgba(59, 130, 246, 0.22), transparent 32%),
-    linear-gradient(165deg, #f8fafc 0%, #eff6ff 48%, #fefce8 100%);
+    radial-gradient(circle at 14% 12%, rgba(14, 165, 233, 0.24), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(45, 212, 191, 0.16), transparent 30%),
+    radial-gradient(circle at 50% 84%, rgba(99, 102, 241, 0.12), transparent 40%),
+    linear-gradient(155deg, #050811 0%, #0b1324 48%, #0a0f1d 100%);
 }
 
 .hero-header {
   background: transparent !important;
-  text-align: center;
   height: auto;
   line-height: 1.35;
   padding: 34px 16px 10px;
+}
+
+.hero-toolbar {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .hero-title {
@@ -21,9 +30,22 @@
 }
 
 .hero-subtitle {
-  max-width: 780px;
-  margin: 0 auto !important;
-  color: #334155;
+  max-width: 860px;
+  margin: 0 !important;
+  color: #94a3b8;
+}
+
+.theme-switch-wrap {
+  margin-top: 4px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.theme-switch-label {
+  font-weight: 600;
 }
 
 .app-content {
@@ -43,9 +65,10 @@
 .tree-card,
 .history-card {
   border-radius: 16px;
-  border: none;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-  backdrop-filter: blur(2px);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 16px 30px rgba(2, 6, 23, 0.42);
+  backdrop-filter: blur(10px);
+  background: linear-gradient(150deg, rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.58));
 }
 
 .control-card.ant-card,
@@ -55,7 +78,8 @@
 .pseudo-card.ant-card,
 .tree-card.ant-card,
 .history-card.ant-card {
-  border: none !important;
+  border: 1px solid rgba(148, 163, 184, 0.24) !important;
+  background: transparent;
 }
 
 .control-card .ant-card-head,
@@ -65,7 +89,17 @@
 .pseudo-card .ant-card-head,
 .tree-card .ant-card-head,
 .history-card .ant-card-head {
-  border-bottom: none;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.control-card .ant-card-head-title,
+.metric-card .ant-card-head-title,
+.step-card .ant-card-head-title,
+.river-card .ant-card-head-title,
+.pseudo-card .ant-card-head-title,
+.tree-card .ant-card-head-title,
+.history-card .ant-card-head-title {
+  color: #e2e8f0;
 }
 
 .control-card .ant-card-body,
@@ -81,6 +115,18 @@
 .workspace-row,
 .dashboard-row {
   margin-top: 0 !important;
+}
+
+.control-card .ant-select-selector,
+.control-card .ant-segmented,
+.control-card .ant-btn,
+.step-card .ant-btn,
+.history-card .ant-table,
+.history-card .ant-pagination-item,
+.history-card .ant-pagination-prev,
+.history-card .ant-pagination-next,
+.history-card .ant-alert {
+  border-color: rgba(148, 163, 184, 0.26) !important;
 }
 
 .action-button {
@@ -103,9 +149,9 @@
   min-height: 188px;
   border-radius: 12px;
   padding: 12px;
-  background: linear-gradient(180deg, #fef3c7 0%, #fdba74 100%);
-  color: #1e293b;
-  border: none;
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.52) 0%, rgba(30, 41, 59, 0.45) 100%);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .bank h4 {
@@ -127,8 +173,8 @@
   gap: 8px;
   padding: 6px 8px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.75);
-  border: none;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.22);
   font-weight: 600;
   font-size: 13px;
 }
@@ -144,10 +190,10 @@
   place-items: center;
   min-height: 118px;
   border-radius: 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.45);
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.28);
   font-style: italic;
-  color: #475569;
+  color: #94a3b8;
 }
 
 .river {
@@ -156,9 +202,9 @@
   border-radius: 14px;
   overflow: hidden;
   background:
-    linear-gradient(180deg, #7dd3fc 0%, #0369a1 100%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 12px, transparent 12px 24px);
-  border: none;
+    linear-gradient(180deg, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.38) 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.14) 0 12px, transparent 12px 24px);
+  border: 1px solid rgba(148, 163, 184, 0.22);
 }
 
 .boat {
@@ -194,13 +240,20 @@
 .pseudo-line {
   border-radius: 8px;
   padding: 7px 9px;
-  background: #f8fafc;
+  background: rgba(15, 23, 42, 0.48);
+  border: 1px solid rgba(148, 163, 184, 0.18);
   transition: all 240ms ease;
 }
 
 .pseudo-line.active {
-  background: #fff7ed;
+  background: rgba(14, 165, 233, 0.22);
+  border-color: rgba(56, 189, 248, 0.5);
   transform: translateX(4px);
+}
+
+.pseudo-line .ant-typography code {
+  color: #e2e8f0;
+  background: transparent;
 }
 
 .tree-wrap {
@@ -209,7 +262,8 @@
   max-height: 560px;
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.64) 0%, rgba(2, 6, 23, 0.8) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .compact-metrics-row .ant-col {
@@ -236,6 +290,186 @@
   min-height: 560px;
 }
 
+.history-card .ant-table,
+.history-card .ant-table-container,
+.history-card .ant-table-thead > tr > th,
+.history-card .ant-table-tbody > tr > td {
+  background: transparent !important;
+}
+
+.history-card .ant-table-thead > tr > th {
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.history-card .ant-table-tbody > tr > td {
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.history-card .ant-table-tbody > tr:hover > td {
+  background: rgba(51, 65, 85, 0.35) !important;
+}
+
+.history-card .ant-pagination-item,
+.history-card .ant-pagination-prev .ant-pagination-item-link,
+.history-card .ant-pagination-next .ant-pagination-item-link {
+  background: rgba(15, 23, 42, 0.6) !important;
+}
+
+.history-card .ant-empty-description,
+.step-card .ant-typography,
+.control-card .ant-typography,
+.metric-card .ant-typography {
+  color: #cbd5e1;
+}
+
+.metric-card .ant-statistic-title {
+  color: #94a3b8;
+}
+
+.metric-card .ant-statistic-content {
+  color: #f8fafc;
+}
+
+.theme-light {
+  background:
+    radial-gradient(circle at 14% 12%, rgba(14, 165, 233, 0.14), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(16, 185, 129, 0.12), transparent 30%),
+    radial-gradient(circle at 50% 84%, rgba(37, 99, 235, 0.08), transparent 40%),
+    linear-gradient(155deg, #f8fafc 0%, #e2e8f0 56%, #dbeafe 100%);
+}
+
+.theme-light .hero-title {
+  color: #0f172a !important;
+}
+
+.theme-light .hero-subtitle {
+  color: #334155;
+}
+
+.theme-light .theme-switch-wrap {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(248, 250, 252, 0.58);
+}
+
+.theme-light .theme-switch-label {
+  color: #0f172a;
+}
+
+.theme-light .control-card,
+.theme-light .metric-card,
+.theme-light .step-card,
+.theme-light .river-card,
+.theme-light .pseudo-card,
+.theme-light .tree-card,
+.theme-light .history-card {
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  background: linear-gradient(150deg, rgba(248, 250, 252, 0.68), rgba(241, 245, 249, 0.58));
+}
+
+.theme-light .control-card.ant-card,
+.theme-light .metric-card.ant-card,
+.theme-light .step-card.ant-card,
+.theme-light .river-card.ant-card,
+.theme-light .pseudo-card.ant-card,
+.theme-light .tree-card.ant-card,
+.theme-light .history-card.ant-card {
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+}
+
+.theme-light .control-card .ant-card-head-title,
+.theme-light .metric-card .ant-card-head-title,
+.theme-light .step-card .ant-card-head-title,
+.theme-light .river-card .ant-card-head-title,
+.theme-light .pseudo-card .ant-card-head-title,
+.theme-light .tree-card .ant-card-head-title,
+.theme-light .history-card .ant-card-head-title {
+  color: #0f172a;
+}
+
+.theme-light .step-card .ant-typography,
+.theme-light .control-card .ant-typography,
+.theme-light .metric-card .ant-typography,
+.theme-light .history-card .ant-empty-description,
+.theme-light .ant-typography,
+.theme-light .ant-tag {
+  color: #1e293b;
+}
+
+.theme-light .metric-card .ant-statistic-title {
+  color: #475569;
+}
+
+.theme-light .metric-card .ant-statistic-content {
+  color: #0f172a;
+}
+
+.theme-light .bank {
+  background: linear-gradient(180deg, rgba(226, 232, 240, 0.72) 0%, rgba(241, 245, 249, 0.64) 100%);
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+}
+
+.theme-light .entity-token {
+  background: rgba(248, 250, 252, 0.72);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  color: #0f172a;
+}
+
+.theme-light .token-empty {
+  border: 1px dashed rgba(100, 116, 139, 0.4);
+  background: rgba(241, 245, 249, 0.52);
+  color: #64748b;
+}
+
+.theme-light .river {
+  background:
+    linear-gradient(180deg, rgba(125, 211, 252, 0.45) 0%, rgba(56, 189, 248, 0.4) 100%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.3) 0 12px, transparent 12px 24px);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.theme-light .pseudo-line {
+  background: rgba(241, 245, 249, 0.62);
+  border: 1px solid rgba(100, 116, 139, 0.24);
+}
+
+.theme-light .pseudo-line.active {
+  background: rgba(14, 165, 233, 0.2);
+  border-color: rgba(2, 132, 199, 0.48);
+}
+
+.theme-light .pseudo-line .ant-typography code {
+  color: #0f172a;
+}
+
+.theme-light .tree-wrap {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.82) 0%, rgba(226, 232, 240, 0.84) 100%);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.theme-light .history-card .ant-table-thead > tr > th {
+  color: #1e293b;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.24);
+}
+
+.theme-light .history-card .ant-table-tbody > tr > td {
+  color: #0f172a;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+}
+
+.theme-light .history-card .ant-table-tbody > tr:hover > td {
+  background: rgba(226, 232, 240, 0.66) !important;
+}
+
+.theme-light .history-card .ant-pagination-item,
+.theme-light .history-card .ant-pagination-prev .ant-pagination-item-link,
+.theme-light .history-card .ant-pagination-next .ant-pagination-item-link {
+  background: rgba(241, 245, 249, 0.8) !important;
+}
+
 @media (max-width: 1200px) {
   .tree-wrap {
     height: 500px;
@@ -249,6 +483,15 @@
 }
 
 @media (max-width: 900px) {
+  .hero-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-switch-wrap {
+    align-self: flex-start;
+  }
+
   .app-content {
     padding: 6px 6px 18px;
   }
