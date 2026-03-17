@@ -117,25 +117,26 @@ function App() {
       }
     }
 
-    if (mode !== 'step') {
-      return {
-        nodes: result.nodes,
-        solutionPath: result.solutionPathNodeIds,
-      }
-    }
+    const nodes =
+      mode !== 'step'
+        ? result.nodes
+        : (() => {
+            const maxOrder = result.expansionOrder.length - 1
+            const revealedOrder = maxOrder >= 0 ? Math.min(Math.max(stepIndex, 0), maxOrder) : -1
+            const byId = new Map(result.nodes.map((node) => [node.id, node]))
 
-    const maxOrder = result.expansionOrder.length - 1
-    const revealedOrder = maxOrder >= 0 ? Math.min(Math.max(stepIndex, 0), maxOrder) : -1
-    const byId = new Map(result.nodes.map((node) => [node.id, node]))
+            return result.nodes.filter((node) => {
+              if (node.parentId === null) {
+                return true
+              }
 
-    const nodes = result.nodes.filter((node) => {
-      if (node.parentId === null) {
-        return true
-      }
-
-      const parent = byId.get(node.parentId)
-      return parent?.expandedOrder !== null && (parent?.expandedOrder ?? Number.MAX_SAFE_INTEGER) <= revealedOrder
-    })
+              const parent = byId.get(node.parentId)
+              return (
+                parent?.expandedOrder !== null &&
+                (parent?.expandedOrder ?? Number.MAX_SAFE_INTEGER) <= revealedOrder
+              )
+            })
+          })()
 
     const visibleIds = new Set(nodes.map((node) => node.id))
 
