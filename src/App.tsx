@@ -66,6 +66,8 @@ function App() {
   const [algorithm, setAlgorithm] = useState<AlgorithmType>('BFS')
   const [heuristic, setHeuristic] = useState<HeuristicType>('remaining-items')
   const [mode, setMode] = useState<RunMode>('step')
+  const [showDuplicateNodes, setShowDuplicateNodes] = useState(true)
+  const [showInvalidNodes, setShowInvalidNodes] = useState(true)
   const [result, setResult] = useState<SearchResult | null>(null)
   const [historyRows, setHistoryRows] = useState<CompareRow[]>([])
   const [stepIndex, setStepIndex] = useState(0)
@@ -137,11 +139,27 @@ function App() {
 
     const visibleIds = new Set(nodes.map((node) => node.id))
 
+    const filteredNodes = nodes.filter((node) => {
+      if (node.prunedType === 'duplicate' && !showDuplicateNodes) {
+        return false
+      }
+
+      if (node.prunedType === 'invalid' && !showInvalidNodes) {
+        return false
+      }
+
+      return true
+    })
+
+    const filteredIds = new Set(filteredNodes.map((node) => node.id))
+    const linkedNodes = filteredNodes.filter((node) => node.parentId === null || filteredIds.has(node.parentId))
+    const linkedIds = new Set(linkedNodes.map((node) => node.id))
+
     return {
-      nodes,
-      solutionPath: result.solutionPathNodeIds.filter((id) => visibleIds.has(id)),
+      nodes: linkedNodes,
+      solutionPath: result.solutionPathNodeIds.filter((id) => visibleIds.has(id) && linkedIds.has(id)),
     }
-  }, [mode, result, stepIndex])
+  }, [mode, result, showDuplicateNodes, showInvalidNodes, stepIndex])
 
   useEffect(() => {
     window.localStorage.setItem('app-theme-mode', isDarkMode ? 'dark' : 'light')
@@ -290,6 +308,24 @@ function App() {
               />
             </Col>
 
+            <Col xs={24} md={6}>
+              <Text strong>Hiển thị node</Text>
+              <Space direction="vertical" size={4} style={{ display: 'flex', marginTop: 4 }}>
+                <Switch
+                  checked={showDuplicateNodes}
+                  onChange={setShowDuplicateNodes}
+                  checkedChildren="Trùng lặp"
+                  unCheckedChildren="Ẩn trùng lặp"
+                />
+                <Switch
+                  checked={showInvalidNodes}
+                  onChange={setShowInvalidNodes}
+                  checkedChildren="Vi phạm"
+                  unCheckedChildren="Ẩn vi phạm"
+                />
+              </Space>
+            </Col>
+
             <Col xs={24} md={5}>
               <Space wrap>
                 <Button type="primary" size="large" onClick={handleRun} className="action-button">
@@ -350,6 +386,7 @@ function App() {
                 showEvaluation={Boolean(result?.heuristic)}
                 isDarkMode={isDarkMode}
                 selectedNodeId={activeNodeId}
+                followSelectedNode={mode === 'step'}
                 onSelectNode={setSelectedNodeId}
               />
               <Card className="metric-card">

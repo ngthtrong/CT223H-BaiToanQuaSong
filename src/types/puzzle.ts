@@ -22,6 +22,8 @@ export interface Move {
 export interface SearchNode {
   id: string
   parentId: string | null
+  iteration: number
+  threshold: number | null
   state: PuzzleState
   stateKey: string
   action: Move | null
@@ -30,6 +32,7 @@ export interface SearchNode {
   h: number
   f: number
   valid: boolean
+  prunedType: 'invalid' | 'duplicate' | 'threshold' | null
   prunedReason: string | null
   expandedOrder: number | null
 }

@@ -32,6 +32,16 @@ interface SearchContext {
   bestCostByState: Map<string, number>
 }
 
+interface SearchContextOptions {
+  nextNodeId?: number
+  expanded?: number
+}
+
+interface NodeMeta {
+  iteration: number
+  threshold: number | null
+}
+
 const createStateKey = (state: PuzzleState): string => {
   return `${state.farmer}${state.wolf}${state.goat}${state.cabbage}`
 }
@@ -102,18 +112,27 @@ const applyMove = (state: PuzzleState, move: Move): PuzzleState => {
   return next
 }
 
-const createContext = (algorithm: AlgorithmType, heuristic: HeuristicType | null): SearchContext => {
+const createContext = (
+  algorithm: AlgorithmType,
+  heuristic: HeuristicType | null,
+  options?: SearchContextOptions,
+): SearchContext => {
   return {
     algorithm,
     heuristic,
     nodes: [],
     expansionOrder: [],
-    nextNodeId: 0,
+    nextNodeId: options?.nextNodeId ?? 0,
     generated: 0,
-    expanded: 0,
+    expanded: options?.expanded ?? 0,
     maxFrontier: 0,
     bestCostByState: new Map<string, number>(),
   }
+}
+
+const defaultNodeMeta: NodeMeta = {
+  iteration: 0,
+  threshold: null,
 }
 
 const addNode = (
@@ -175,10 +194,12 @@ const buildMetrics = (
   }
 }
 
-const createRootNode = (context: SearchContext): SearchNode => {
+const createRootNode = (context: SearchContext, nodeMeta: NodeMeta = defaultNodeMeta): SearchNode => {
   const h = context.heuristic ? evaluateHeuristic(START_STATE, context.heuristic) : 0
   const root = addNode(context, {
     parentId: null,
+    iteration: nodeMeta.iteration,
+    threshold: nodeMeta.threshold,
     state: START_STATE,
     stateKey: createStateKey(START_STATE),
     action: null,
@@ -187,6 +208,7 @@ const createRootNode = (context: SearchContext): SearchNode => {
     h,
     f: h,
     valid: true,
+    prunedType: null,
     prunedReason: null,
   })
   context.bestCostByState.set(root.stateKey, 0)
@@ -197,6 +219,7 @@ const createChildNode = (
   context: SearchContext,
   parent: SearchNode,
   move: Move,
+  nodeMeta: NodeMeta = defaultNodeMeta,
 ): { node: SearchNode; accepted: boolean } => {
   const state = applyMove(parent.state, move)
   const stateKey = createStateKey(state)
@@ -208,6 +231,8 @@ const createChildNode = (
     return {
       node: addNode(context, {
         parentId: parent.id,
+        iteration: nodeMeta.iteration,
+        threshold: nodeMeta.threshold,
         state,
         stateKey,
         action: move,
@@ -216,6 +241,7 @@ const createChildNode = (
         h,
         f: g + h,
         valid: false,
+        prunedType: 'invalid',
         prunedReason: invalidReason,
       }),
       accepted: false,
@@ -227,6 +253,8 @@ const createChildNode = (
     return {
       node: addNode(context, {
         parentId: parent.id,
+        iteration: nodeMeta.iteration,
+        threshold: nodeMeta.threshold,
         state,
         stateKey,
         action: move,
@@ -235,6 +263,7 @@ const createChildNode = (
         h,
         f: g + h,
         valid: true,
+        prunedType: 'duplicate',
         prunedReason: 'Trạng thái trùng lặp với chi phí không tốt hơn.',
       }),
       accepted: false,
@@ -245,6 +274,8 @@ const createChildNode = (
   return {
     node: addNode(context, {
       parentId: parent.id,
+      iteration: nodeMeta.iteration,
+      threshold: nodeMeta.threshold,
       state,
       stateKey,
       action: move,
@@ -253,6 +284,7 @@ const createChildNode = (
       h,
       f: g + h,
       valid: true,
+      prunedType: null,
       prunedReason: null,
     }),
     accepted: true,
@@ -359,6 +391,7 @@ const solveBestFirst = (algorithm: 'A*' | 'Greedy', heuristic: HeuristicType): S
 interface DepthRunResult {
   context: SearchContext
   solutionNode: SearchNode | null
+  nextThresholdCandidate: number | null
 }
 
 const depthLimitedSearch = (
@@ -366,13 +399,21 @@ const depthLimitedSearch = (
   algorithm: 'IDS' | 'IDA*',
   heuristic: HeuristicType,
   threshold: number | null,
+  iterationIndex = 0,
+  contextOptions?: SearchContextOptions,
 ): DepthRunResult => {
-  const context = createContext(algorithm, heuristic)
-  const root = createRootNode(context)
+  const nodeMeta: NodeMeta = {
+    iteration: iterationIndex,
+    threshold,
+  }
+
+  const context = createContext(algorithm, heuristic, contextOptions)
+  const root = createRootNode(context, nodeMeta)
   const stack: SearchNode[] = [root]
   context.maxFrontier = 1
 
   let solutionNode: SearchNode | null = null
+  let minExceededThreshold = Number.POSITIVE_INFINITY
 
   while (stack.length > 0) {
     const node = stack.pop()!
@@ -390,13 +431,15 @@ const depthLimitedSearch = (
     const acceptedChildren: SearchNode[] = []
 
     generateMoves(node.state).forEach((move) => {
-      const { node: child, accepted } = createChildNode(context, node, move)
+      const { node: child, accepted } = createChildNode(context, node, move, nodeMeta)
       const overThreshold = threshold !== null && child.f > threshold
 
       if (accepted && !overThreshold) {
         acceptedChildren.push(child)
       } else if (accepted && overThreshold) {
-        child.prunedReason = `Vượt ngưỡng f = ${threshold}`
+        child.prunedType = 'threshold'
+        child.prunedReason = `Cắt IDA*: f=${child.f} > ngưỡng=${threshold}`
+        minExceededThreshold = Math.min(minExceededThreshold, child.f)
       }
     })
 
@@ -404,7 +447,12 @@ const depthLimitedSearch = (
     context.maxFrontier = Math.max(context.maxFrontier, stack.length)
   }
 
-  return { context, solutionNode }
+  return {
+    context,
+    solutionNode,
+    nextThresholdCandidate:
+      Number.isFinite(minExceededThreshold) && threshold !== null ? minExceededThreshold : null,
+  }
 }
 
 const solveIds = (): SearchResult => {
@@ -447,46 +495,57 @@ const solveIdaStar = (heuristic: HeuristicType): SearchResult => {
   const startTime = performance.now()
   let threshold = evaluateHeuristic(START_STATE, heuristic)
 
-  let bestContext: SearchContext | null = null
+  const mergedContext = createContext('IDA*', heuristic)
+  let nextNodeId = 0
+  let expandedOffset = 0
   let solutionNodeId: string | null = null
 
   for (let iteration = 0; iteration < 20; iteration += 1) {
-    const { context, solutionNode } = depthLimitedSearch(30, 'IDA*', heuristic, threshold)
-    bestContext = context
+    const { context, solutionNode, nextThresholdCandidate } = depthLimitedSearch(
+      30,
+      'IDA*',
+      heuristic,
+      threshold,
+      iteration + 1,
+      {
+        nextNodeId,
+        expanded: expandedOffset,
+      },
+    )
+
+    mergedContext.nodes.push(...context.nodes)
+    mergedContext.expansionOrder.push(...context.expansionOrder)
+    mergedContext.generated += context.generated
+    mergedContext.expanded = context.expanded
+    mergedContext.maxFrontier = Math.max(mergedContext.maxFrontier, context.maxFrontier)
+
+    nextNodeId = context.nextNodeId
+    expandedOffset = context.expanded
 
     if (solutionNode) {
       solutionNodeId = solutionNode.id
       break
     }
 
-    const candidates = context.nodes
-      .filter((node) => node.valid && node.prunedReason?.startsWith('Vượt ngưỡng'))
-      .map((node) => node.f)
-      .filter((value) => Number.isFinite(value) && value > threshold)
-
-    if (candidates.length === 0) {
+    if (nextThresholdCandidate === null) {
       break
     }
 
-    threshold = Math.min(...candidates)
-  }
-
-  if (!bestContext) {
-    throw new Error('IDA* không khởi tạo được ngữ cảnh tìm kiếm.')
+    threshold = nextThresholdCandidate
   }
 
   const solutionNode = solutionNodeId
-    ? bestContext.nodes.find((node) => node.id === solutionNodeId) ?? null
+    ? mergedContext.nodes.find((node) => node.id === solutionNodeId) ?? null
     : null
 
   return {
     algorithm: 'IDA*',
     heuristic,
-    nodes: bestContext.nodes,
-    expansionOrder: bestContext.expansionOrder,
+    nodes: mergedContext.nodes,
+    expansionOrder: mergedContext.expansionOrder,
     solutionNodeId,
-    solutionPathNodeIds: buildSolutionPath(bestContext.nodes, solutionNodeId),
-    metrics: buildMetrics(bestContext, startTime, solutionNode),
+    solutionPathNodeIds: buildSolutionPath(mergedContext.nodes, solutionNodeId),
+    metrics: buildMetrics(mergedContext, startTime, solutionNode),
   }
 }
 
