@@ -320,7 +320,7 @@ function App() {
         <Content className="app-content">
           <Card className="control-card">
             <Row gutter={[16, 16]} align="middle">
-              <Col xs={24} md={6}>
+              <Col xs={24} md={2}>
                 <Text strong>Thuật toán</Text>
                 <Select
                   value={algorithm}
@@ -333,8 +333,8 @@ function App() {
                 />
               </Col>
 
-              <Col xs={24} md={7}>
-                <Text strong>Hàm đánh giá (A*, Greedy, IDA*)</Text>
+              <Col xs={24} md={5}>
+                <Text strong>Hàm đánh giá</Text>
                 <Select
                   value={heuristic}
                   style={{ width: "100%" }}
@@ -352,7 +352,7 @@ function App() {
                 )}
               </Col>
 
-              <Col xs={24} md={6}>
+              <Col xs={24} md={4}>
                 <Text strong>Chế độ chạy</Text>
                 <Segmented
                   style={{ width: "100%" }}
@@ -365,7 +365,7 @@ function App() {
                 />
               </Col>
 
-              <Col xs={24} md={6}>
+              <Col xs={24} md={2}>
                 <Text strong>Hiển thị node</Text>
                 <Space
                   direction="vertical"
@@ -387,81 +387,74 @@ function App() {
                 </Space>
               </Col>
 
-              <Col xs={24} md={5}>
+              <Col xs={24} md={2}>
                 <Space wrap>
                   <Button
                     type="primary"
                     size="large"
                     onClick={handleRun}
-                    className="action-button"
+                    // className="action-button"
                   >
-                    Chạy thuật toán
-                  </Button>
-                  <Button onClick={() => setHistoryRows([])}>
-                    Xóa lịch sử
+                    RUN
                   </Button>
                 </Space>
               </Col>
+              <Card className="step-card">
+                <Space wrap>
+                  <Button
+                    icon={<StepBackwardOutlined />}
+                    disabled={!result || mode !== "step"}
+                    onClick={() =>
+                      setStepIndex((prev) => Math.max(0, prev - 1))
+                    }
+                  >
+                    Lùi
+                  </Button>
+                  <Button
+                    icon={
+                      playing ? <PauseCircleOutlined /> : <PlayCircleOutlined />
+                    }
+                    disabled={disablePlayButton}
+                    onClick={() => setPlaying((prev) => !prev)}
+                  >
+                    {playing ? "Tạm dừng" : "Phát"}
+                  </Button>
+                  <Button
+                    icon={<StepForwardOutlined />}
+                    disabled={!result || mode !== "step"}
+                    onClick={() =>
+                      setStepIndex((prev) => Math.min(stepMax, prev + 1))
+                    }
+                  >
+                    Tiếp
+                  </Button>
+                  <Button
+                    icon={<RedoOutlined />}
+                    disabled={!result || mode !== "step"}
+                    onClick={handleResetSteps}
+                  >
+                    Đặt lại
+                  </Button>
+                  <Tag>
+                    Bước: {mode === "step" ? stepIndex : 0}/
+                    {mode === "step" ? stepMax : 0}
+                  </Tag>
+                </Space>
+                <Paragraph className="step-note">
+                  Nút hiện tại:{" "}
+                  <Text strong>
+                    {activeNode
+                      ? `${activeNode.stateKey} ${activeNode.prunedReason ? `(Loại: ${activeNode.prunedReason})` : ""}`
+                      : "Không có"}
+                  </Text>
+                </Paragraph>
+              </Card>
             </Row>
           </Card>
 
           <Row gutter={[16, 16]} className="workspace-row">
             <Col xs={24} xl={7}>
               <Space direction="vertical" size={16} style={{ width: "100%" }}>
-                <Card className="step-card">
-                  <Space wrap>
-                    <Button
-                      icon={<StepBackwardOutlined />}
-                      disabled={!result || mode !== "step"}
-                      onClick={() =>
-                        setStepIndex((prev) => Math.max(0, prev - 1))
-                      }
-                    >
-                      Lùi
-                    </Button>
-                    <Button
-                      icon={
-                        playing ? (
-                          <PauseCircleOutlined />
-                        ) : (
-                          <PlayCircleOutlined />
-                        )
-                      }
-                      disabled={disablePlayButton}
-                      onClick={() => setPlaying((prev) => !prev)}
-                    >
-                      {playing ? "Tạm dừng" : "Phát"}
-                    </Button>
-                    <Button
-                      icon={<StepForwardOutlined />}
-                      disabled={!result || mode !== "step"}
-                      onClick={() =>
-                        setStepIndex((prev) => Math.min(stepMax, prev + 1))
-                      }
-                    >
-                      Tiếp
-                    </Button>
-                    <Button
-                      icon={<RedoOutlined />}
-                      disabled={!result || mode !== "step"}
-                      onClick={handleResetSteps}
-                    >
-                      Đặt lại
-                    </Button>
-                    <Tag>
-                      Bước: {mode === "step" ? stepIndex : 0}/
-                      {mode === "step" ? stepMax : 0}
-                    </Tag>
-                  </Space>
-                  <Paragraph className="step-note">
-                    Nút hiện tại:{" "}
-                    <Text strong>
-                      {activeNode
-                        ? `${activeNode.stateKey} ${activeNode.prunedReason ? `(Loại: ${activeNode.prunedReason})` : ""}`
-                        : "Không có"}
-                    </Text>
-                  </Paragraph>
-                </Card>
                 <RiverScene
                   state={activeNode?.state ?? parseStateKey("LLLL")}
                 />
@@ -573,6 +566,7 @@ function App() {
                 title="Bảng so sánh kết quả (chạy lần lượt)"
                 className="history-card"
               >
+                <Button onClick={() => setHistoryRows([])}>Xóa lịch sử</Button>
                 <Table
                   rowKey="key"
                   columns={compareColumns}

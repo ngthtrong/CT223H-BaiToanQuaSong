@@ -2,7 +2,6 @@ import { Card, Empty, Space, Tag, Tooltip, Typography } from 'antd'
 import {
   Background,
   Controls,
-  MiniMap,
   ReactFlow,
   type Edge,
   type Node,
@@ -208,7 +207,8 @@ export function StateTree({
           nodesDraggable={false}
           panOnDrag
           panOnScroll
-          colorMode={isDarkMode ? 'dark' : 'light'}
+          // colorMode={isDarkMode ? 'dark' : 'light'}
+          style={{ backgroundColor: 'transparent' }}
         >
           <AutoViewport
             nodeCount={nodes.length}
@@ -216,7 +216,6 @@ export function StateTree({
             focusEnabled={followSelectedNode}
             flowNodes={flowNodes}
           />
-          <MiniMap zoomable pannable />
           <Controls />
           <Background gap={18} size={1} />
         </ReactFlow>
