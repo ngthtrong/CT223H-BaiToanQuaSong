@@ -399,6 +399,17 @@ function App() {
                   </Button>
                 </Space>
               </Col>
+
+
+
+              {/* a */}
+            </Row>
+          </Card>
+
+          <Row gutter={[16, 16]} className="workspace-row">
+            <Col xs={24} xl={7}>
+              <Space direction="vertical" size={16} style={{ width: "100%" }}>
+              
               <Card className="step-card">
                 <Space wrap>
                   <Button
@@ -449,18 +460,12 @@ function App() {
                   </Text>
                 </Paragraph>
               </Card>
-            </Row>
-          </Card>
-
-          <Row gutter={[16, 16]} className="workspace-row">
-            <Col xs={24} xl={7}>
-              <Space direction="vertical" size={16} style={{ width: "100%" }}>
-                <RiverScene
-                  state={activeNode?.state ?? parseStateKey("LLLL")}
-                />
-                <PseudocodePanel
+                {/* <PseudocodePanel
                   algorithm={algorithm}
                   activeLine={activeLine}
+                /> */}
+                  <RiverScene
+                  state={activeNode?.state ?? parseStateKey("LLLL")}
                 />
               </Space>
             </Col>
