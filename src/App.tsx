@@ -61,7 +61,7 @@ const algorithmOptions: AlgorithmType[] = [
   "BFS",
   "DFS",
   "A*",
-  "Greedy",
+  // "Greedy",
   "IDA*",
 ];
 
